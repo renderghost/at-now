@@ -101,7 +101,7 @@ describe('createHttpSource', () => {
   });
 
   it('reads own records from the configured PDS without a PLC lookup', async () => {
-    const fetchImpl = vi.fn(async () =>
+    const fetchImpl = vi.fn(async (_url: string | URL | Request) =>
       json({ uri: 'at://did:plc:me/c/k', cid: 'x', value: { a: 1 } })
     );
     const source = sourceWith(fetchImpl as unknown as typeof fetch);
