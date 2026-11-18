@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import type {
   AtRecord,
   AtSource,
@@ -7,24 +8,21 @@ import type {
 } from '../../src/core/atproto/types.js';
 import { tidToDate } from '../../src/core/time.js';
 
-const FIXTURES = new URL('../fixtures/', import.meta.url);
+// Resolved from the project root: import.meta.url is not a file URL under jsdom.
+const FIXTURES = join(process.cwd(), 'tests', 'fixtures');
 const cache = new Map<string, unknown>();
 
 function readFixture<T>(path: string): T {
   if (!cache.has(path)) {
-    cache.set(path, JSON.parse(readFileSync(new URL(path, FIXTURES), 'utf8')));
+    cache.set(path, JSON.parse(readFileSync(join(FIXTURES, path), 'utf8')));
   }
   return cache.get(path) as T;
 }
 
 /** Own records recorded from the PDS for one collection. */
 export function fixtureRecords<T>(nsid: string): AtRecord<T>[] {
-  try {
-    return readFixture<{ records: AtRecord<T>[] }>(`records/${nsid}.json`)
-      .records;
-  } catch {
-    return [];
-  }
+  if (!existsSync(join(FIXTURES, 'records', `${nsid}.json`))) return [];
+  return readFixture<{ records: AtRecord<T>[] }>(`records/${nsid}.json`).records;
 }
 
 export interface FakeSourceOptions {
