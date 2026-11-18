@@ -1,14 +1,25 @@
-// Card stacks follow renderg.host/career: 2/3 width on large screens, 8px gaps.
-export const cardList = 'flex flex-col gap-8 w-full lg:w-2/3';
+// One card system; every grid uses the 8px gap of renderg.host/career.
+export const twoUp = 'grid grid-cols-1 md:grid-cols-2 gap-8 w-full';
 
-export const rowList = 'flex flex-col gap-24 w-full lg:w-2/3';
+export const threeUp = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full';
 
-export const galleryList = 'flex flex-col gap-48 w-full';
+export const mediaGrid = 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 w-full';
 
-// Books and music artwork share CardBook's grid.
-export const mediaGrid = 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-16 w-full';
+export const stack = 'flex flex-col gap-8 w-full';
 
-export const subBlocks = 'flex flex-col gap-40 w-full';
+// Posts vary wildly in height: masonry columns instead of equal-height rows.
+export const masonry = 'columns-1 md:columns-2 gap-8 w-full';
+
+export const masonryItem = 'break-inside-avoid pb-8';
+
+// Social sub-blocks fill the row whatever their number.
+export const socialGrid: Record<number, string> = {
+  1: 'grid grid-cols-1 gap-8 w-full lg:w-2/3',
+  2: 'grid grid-cols-1 md:grid-cols-2 gap-8 w-full',
+  3: 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full',
+};
+
+export const subBlocks = 'flex flex-col gap-24 w-full';
 
 export const subBlock = 'flex flex-col gap-16 w-full';
 

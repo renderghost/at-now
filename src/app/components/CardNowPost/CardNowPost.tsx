@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import { Link } from '@/app/components/Link/Link';
 import { NowImage } from '@/app/components/NowImage/NowImage';
@@ -15,7 +16,8 @@ const hostOf = (url: string): string => {
 };
 
 export const CardNowPost: React.FC<CardNowPostProps> = ({ item, now }) => (
-  <article className={styles.card}>
+  <Card as="article" className="justify-between">
+    <div className={styles.body}>
     {item.text && <p className={styles.text}>{item.text}</p>}
     {item.images.length > 0 && (
       <div className={styles.images}>
@@ -34,9 +36,10 @@ export const CardNowPost: React.FC<CardNowPostProps> = ({ item, now }) => (
       </a>
     )}
     {item.quote && <Link href={item.quote.href} label={QUOTE_LABEL} color="blue" icon="right" />}
-    <div className="flex flex-wrap items-center gap-16">
+    </div>
+    <div className={styles.footer}>
       <ItemMeta at={item.at} app={item.app} now={now} />
       {item.href && <Link href={item.href} label="View post" color="blue" icon="right" />}
     </div>
-  </article>
+  </Card>
 );

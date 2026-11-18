@@ -1,12 +1,13 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import type { CountItem } from '@/core/types';
-import { summary } from './BlockListening.constants';
+import { playsLabel } from './BlockListening.constants';
 import * as styles from './BlockListening.styles';
 import type { BlockListeningProps } from './BlockListening.types';
 
 const Ranked: React.FC<{ title: string; items: CountItem[] }> = ({ title, items }) => (
-  <div className="flex flex-col gap-8">
+  <div className={styles.column}>
     <p className={styles.listTitle}>{title}</p>
     <ol className={styles.list}>
       {items.map((item) => (
@@ -20,20 +21,25 @@ const Ranked: React.FC<{ title: string; items: CountItem[] }> = ({ title, items 
 );
 
 export const BlockListening: React.FC<BlockListeningProps> = ({ theme, now }) => (
-  <div className={styles.wrapper}>
-    <p className={styles.entry}>{summary(theme.playCount)}</p>
-    <div className={styles.columns}>
+  <Card>
+    <div className={styles.grid}>
+      <div className={styles.column}>
+        <div className="flex flex-col">
+          <p className={styles.big}>{theme.playCount}</p>
+          <p className={styles.label}>{playsLabel(theme.playCount)}</p>
+        </div>
+        {theme.lastPlayed && (
+          <>
+            <p className={styles.lastText}>
+              Last played: {theme.lastPlayed.track}
+              {theme.lastPlayed.artist ? ` — ${theme.lastPlayed.artist}` : ''}
+            </p>
+            <ItemMeta at={theme.lastPlayed.at} app={theme.lastPlayed.app} now={now} />
+          </>
+        )}
+      </div>
       {theme.topArtists.length > 0 && <Ranked title="Top artists" items={theme.topArtists} />}
       {theme.topTracks.length > 0 && <Ranked title="Top tracks" items={theme.topTracks} />}
     </div>
-    {theme.lastPlayed && (
-      <div className={styles.last}>
-        <p className={styles.lastText}>
-          Last played: {theme.lastPlayed.track}
-          {theme.lastPlayed.artist ? ` — ${theme.lastPlayed.artist}` : ''}
-        </p>
-        <ItemMeta at={theme.lastPlayed.at} app={theme.lastPlayed.app} now={now} />
-      </div>
-    )}
-  </div>
+  </Card>
 );

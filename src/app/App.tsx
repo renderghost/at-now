@@ -1,5 +1,5 @@
 import React from 'react';
-import { FootprintBlock } from '@/app/components/FootprintBlock/FootprintBlock';
+import { AboutBlock } from '@/app/components/AboutBlock/AboutBlock';
 import { LoadingState } from '@/app/components/LoadingState/LoadingState';
 import { NowFallback } from '@/app/components/NowFallback/NowFallback';
 import { NowHero } from '@/app/components/NowHero/NowHero';
@@ -22,10 +22,15 @@ const App: React.FC<AppProps> = ({ now }) => {
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-whitesmoke">
       <SafeBoundary name="header">
-        <NowHero profile={data?.profile ?? null} status={data?.status ?? null} now={clock} />
+        <NowHero
+          profile={data?.profile ?? null}
+          status={data?.status ?? null}
+          generatedAt={data?.generatedAt}
+          now={clock}
+        />
       </SafeBoundary>
 
-      <main className="flex flex-col items-start w-full max-w-[1920px] px-24 pt-48 gap-48 pb-128">
+      <main className="flex flex-col items-start w-full max-w-[1920px] px-24 pt-48 gap-56 pb-128">
         {state === 'loading' && <LoadingState />}
         {state === 'error' && <NowFallback />}
         {state === 'ready' &&
@@ -35,7 +40,7 @@ const App: React.FC<AppProps> = ({ now }) => {
             </SafeBoundary>
           ))}
         {state === 'ready' && (
-          <div className="flex flex-col gap-48 w-full pt-32 border-t border-black-10">
+          <div className="flex flex-col gap-48 w-full">
             <SafeBoundary name="stats">
               <StatsPanel stats={data.stats} profile={data.profile} />
             </SafeBoundary>
@@ -44,8 +49,8 @@ const App: React.FC<AppProps> = ({ now }) => {
                 <ProfileLinks links={data.profile.links} />
               </SafeBoundary>
             )}
-            <SafeBoundary name="footprint">
-              <FootprintBlock footprint={data.footprint} />
+            <SafeBoundary name="about">
+              <AboutBlock footprint={data.footprint} />
             </SafeBoundary>
           </div>
         )}

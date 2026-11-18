@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
-import { FootprintBlock } from '@/app/components/FootprintBlock/FootprintBlock';
+import { AboutBlock } from '@/app/components/AboutBlock/AboutBlock';
 import { ProfileLinks } from '@/app/components/ProfileLinks/ProfileLinks';
 import { StatsPanel } from '@/app/components/StatsPanel/StatsPanel';
 import { buildNow } from '@/core/buildNow';
@@ -72,11 +72,27 @@ describe('ProfileLinks', () => {
   });
 });
 
-describe('FootprintBlock', () => {
-  it('names the PDS host', () => {
-    render(<FootprintBlock footprint={payload.footprint} />);
+describe('AboutBlock', () => {
+  it('explains the page and credits nownownow.com', () => {
+    render(<AboutBlock footprint={payload.footprint} />);
+    const about = screen.getByRole('region', { name: 'About this page' });
+    expect(within(about).getByText(/what I’m focused on at this point in my life/)).toBeTruthy();
+    expect(
+      within(about).getByRole('link', { name: 'nownownow.com' }).getAttribute('href')
+    ).toBe('https://nownownow.com/about');
+    expect(within(about).getByText(/anything from the past week marked Now/)).toBeTruthy();
+  });
+
+  it('names the footprint and every app', () => {
+    render(<AboutBlock footprint={payload.footprint} />);
     expect(
       screen.getByText('Built live from 34 collections across 16 apps, hosted on eurosky.social:')
     ).toBeTruthy();
+    expect(screen.getAllByRole('link').filter((a) => a.textContent !== 'nownownow.com')).toHaveLength(16);
+  });
+
+  it('sits in a card', () => {
+    const { container } = render(<AboutBlock footprint={payload.footprint} />);
+    expect(container.querySelector('[data-card]')).toBeTruthy();
   });
 });

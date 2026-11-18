@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { Link } from '@/app/components/Link/Link';
 import { NowImage } from '@/app/components/NowImage/NowImage';
 import { TITLE } from './ProfileLinks.constants';
@@ -13,6 +14,7 @@ export const ProfileLinks: React.FC<ProfileLinksProps> = ({ links }) => {
       <h2 id="elsewhere" className={styles.title}>
         {TITLE}
       </h2>
+      <Card>
       <ul className={styles.list}>
         {links.map((link) => (
           <li key={link.url} className={styles.item}>
@@ -21,6 +23,7 @@ export const ProfileLinks: React.FC<ProfileLinksProps> = ({ links }) => {
           </li>
         ))}
       </ul>
+      </Card>
     </section>
   );
 };

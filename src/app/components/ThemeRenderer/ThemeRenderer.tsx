@@ -21,7 +21,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
   switch (theme.id) {
     case 'working':
       return (
-        <ul className={styles.cardList}>
+        <ul className={styles.twoUp}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowPosition item={item} now={now} />
@@ -31,7 +31,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
       );
     case 'going':
       return (
-        <ul className={styles.cardList}>
+        <ul className={styles.twoUp}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowEvent item={item} now={now} />
@@ -41,7 +41,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
       );
     case 'writing':
       return (
-        <ul className={styles.cardList}>
+        <ul className={styles.twoUp}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowWriting item={item} now={now} />
@@ -67,7 +67,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
           {theme.repos.length > 0 && (
             <div className={styles.subBlock}>
               <p className={styles.subtitle}>Code</p>
-              <ul className={styles.rowList}>
+              <ul className={styles.threeUp}>
                 {theme.repos.map((item) => (
                   <li key={item.key}>
                     <RowNowRepo item={item} now={now} />
@@ -80,7 +80,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
       );
     case 'photographing':
       return (
-        <ul className={styles.galleryList}>
+        <ul className={styles.stack}>
           {theme.galleries.map((item) => (
             <li key={item.key}>
               <CardNowGallery item={item} now={now} />
@@ -102,9 +102,9 @@ function body(theme: Theme, now: Date): React.ReactNode {
       return <BlockListening theme={theme} now={now} />;
     case 'posting':
       return (
-        <ul className={styles.cardList}>
+        <ul className={styles.masonry}>
           {theme.items.map((item) => (
-            <li key={item.key}>
+            <li key={item.key} className={styles.masonryItem}>
               <CardNowPost item={item} now={now} />
             </li>
           ))}
@@ -112,7 +112,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
       );
     case 'saving':
       return (
-        <ul className={styles.rowList}>
+        <ul className={styles.threeUp}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowSaved item={item} now={now} />
@@ -120,9 +120,10 @@ function body(theme: Theme, now: Date): React.ReactNode {
           ))}
         </ul>
       );
-    case 'social':
+    case 'social': {
+      const blocks = [theme.following, theme.subscribed, theme.appreciated].filter(Boolean).length;
       return (
-        <div className={styles.subBlocks}>
+        <div className={styles.socialGrid[blocks] ?? styles.threeUp}>
           {theme.following && (
             <BlockInteractions title="Following" verb="Followed" noun="people" block={theme.following} now={now} />
           )}
@@ -146,6 +147,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
           )}
         </div>
       );
+    }
   }
 }
 

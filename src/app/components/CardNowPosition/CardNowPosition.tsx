@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import { formatDate } from '@/core/time';
 import { ONGOING, WORKPLACE_LABELS } from './CardNowPosition.constants';
@@ -13,15 +14,15 @@ export const CardNowPosition: React.FC<CardNowPositionProps> = ({ item, now }) =
   ].filter(Boolean);
 
   return (
-    <article className={styles.card}>
-      <h3 className={styles.title}>{item.title}</h3>
-      <div className={styles.metaRow}>
+    <Card as="article" className="justify-between">
+      <div className={styles.body}>
+        <h3 className={styles.title}>{item.title}</h3>
         {details.length > 0 && <p className={styles.metaText}>{details.join(' · ')}</p>}
-        <p className={styles.metaText}>
+        <p className={styles.dates}>
           {formatDate(new Date(item.startedAt), 'month')} – {ONGOING}
         </p>
       </div>
       <ItemMeta at={item.at} app={item.app} now={now} prefix="started" />
-    </article>
+    </Card>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { TITLE, statGroups } from './StatsPanel.constants';
 import * as styles from './StatsPanel.styles';
 import type { StatsPanelProps } from './StatsPanel.types';
@@ -15,7 +16,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ stats, profile }) => {
       </h2>
       <div className={styles.grid}>
         {groups.map((group) => (
-          <div key={group.title} className={styles.group}>
+          <Card key={group.title}>
             <p className={styles.groupTitle}>{group.title}</p>
             <dl className={styles.list}>
               {group.stats.map((stat) => (
@@ -25,7 +26,7 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ stats, profile }) => {
                 </div>
               ))}
             </dl>
-          </div>
+          </Card>
         ))}
       </div>
     </section>

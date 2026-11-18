@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import { Link } from '@/app/components/Link/Link';
 import * as styles from './CardNowGallery.styles';
@@ -7,7 +8,7 @@ import type { CardNowGalleryProps } from './CardNowGallery.types';
 export const CardNowGallery: React.FC<CardNowGalleryProps> = ({ item, now }) => {
   const extra = item.photoCount - item.photos.length;
   return (
-    <article className={styles.card}>
+    <Card as="article">
       <div className={styles.head}>
         <h3 className={styles.title}>
           {item.href ? <Link href={item.href} label={item.title} color="black" size="large" wrap /> : item.title}
@@ -23,6 +24,6 @@ export const CardNowGallery: React.FC<CardNowGalleryProps> = ({ item, now }) => 
       </ul>
       {extra > 0 && <p className={styles.more}>+{extra} more</p>}
       <ItemMeta at={item.at} app={item.app} now={now} />
-    </article>
+    </Card>
   );
 };

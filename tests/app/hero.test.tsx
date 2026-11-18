@@ -16,38 +16,57 @@ afterEach(cleanup);
 
 const renderHero = (overrides: Partial<NowPayload> = {}) => {
   const data = { ...payload, ...overrides };
-  return render(<NowHero profile={data.profile} status={data.status} now={NOW} />);
+  return render(
+    <NowHero profile={data.profile} status={data.status} generatedAt={data.generatedAt} now={NOW} />
+  );
 };
 
-describe('NowHero (light, compact)', () => {
-  it('shows name, handle, pronouns, place and bio', () => {
+describe('NowHero', () => {
+  it('features the Now title in a yellow card with the full date', () => {
     renderHero();
-    expect(screen.getByText('B. Prendergast')).toBeTruthy();
+    const title = screen.getByRole('heading', { level: 1, name: 'Now' });
+    const card = title.closest('[data-card]');
+    expect(card?.className).toContain('bg-yellow');
+    expect(card?.textContent).toContain('Wednesday 18 November 2026');
+    expect(card?.textContent).toContain('Refreshed just now from my PDS');
+    expect(card?.textContent).toContain('Live');
+  });
+
+  it('only pulses for visitors who allow motion', () => {
+    const { container } = renderHero();
+    const pulse = container.querySelector('[data-part="live-pulse"]');
+    expect(pulse?.className).toContain('motion-safe:animate-ping');
+    expect(pulse?.className).not.toMatch(/(^|\s)animate-ping/);
+  });
+
+  it('sits beside the profile card on wide screens', () => {
+    renderHero();
+    const feature = screen.getByRole('heading', { level: 1, name: 'Now' }).closest('[data-card]');
+    const profile = screen.getByText('B. Prendergast').closest('[data-card]');
+    expect(feature?.parentElement?.className).toContain('lg:grid-cols-3');
+    expect(profile?.parentElement?.className).toContain('lg:col-span-2');
+  });
+
+  it('wraps the Bluesky identity in a card with the banner', () => {
+    const { container } = renderHero();
+    const card = screen.getByText('B. Prendergast').closest('[data-card]');
+    expect(card).toBeTruthy();
+    expect(card?.querySelector('img[src*="/img/banner/"]')).toBeTruthy();
+    expect(screen.getByRole('img', { name: 'B. Prendergast' })).toBeTruthy();
     expect(
       screen.getByRole('link', { name: '@renderg.host' }).getAttribute('href')
     ).toBe('https://bsky.app/profile/renderg.host');
     expect(screen.getByText(/he\/him/)).toBeTruthy();
     expect(screen.getByText(/Berlin, DE/)).toBeTruthy();
     expect(screen.getByText(/Socialist building a social web/)).toBeTruthy();
-    expect(screen.getByRole('img', { name: 'B. Prendergast' })).toBeTruthy();
-  });
-
-  it('leaves out the banner, links and stats', () => {
-    const { container } = renderHero();
-    expect(container.querySelector('img[src*="/img/banner/"]')).toBeNull();
-    expect(screen.queryByRole('list', { name: 'Profile links' })).toBeNull();
-    expect(screen.queryByText('At a glance')).toBeNull();
     expect(container.querySelector('.bg-blue')).toBeNull();
   });
 
-  it('explains the now page and credits nownownow.com', () => {
+  it('keeps the explainer, links and stats out of the header', () => {
     renderHero();
-    expect(screen.getByRole('heading', { level: 1, name: 'Now' })).toBeTruthy();
-    expect(screen.getByText(/what I’m focused on at this point in my life/)).toBeTruthy();
-    expect(
-      screen.getByRole('link', { name: 'nownownow.com' }).getAttribute('href')
-    ).toBe('https://nownownow.com/about');
-    expect(screen.getByText(/anything from the past week marked Now/)).toBeTruthy();
+    expect(screen.queryByText(/nownownow/)).toBeNull();
+    expect(screen.queryByRole('list', { name: 'Profile links' })).toBeNull();
+    expect(screen.queryByText('At a glance')).toBeNull();
   });
 
   it('still renders without a profile', () => {

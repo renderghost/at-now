@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   dateToTid,
   formatDate,
+  formatLongDate,
   freshnessOf,
   isWithinWindow,
   parseDate,
@@ -102,6 +103,12 @@ describe('relativeTime', () => {
     );
     expect(relativeTime(ago(30_000), NOW)).toBe('just now');
     expect(relativeTime(ago(3 * 3_600_000), NOW)).toBe('3 hours ago');
+  });
+});
+
+describe('formatLongDate', () => {
+  it('spells the date out in en-GB', () => {
+    expect(formatLongDate(NOW)).toBe('Wednesday 18 November 2026');
   });
 });
 

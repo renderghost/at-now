@@ -1,5 +1,3 @@
-export const card = 'flex flex-col gap-16 items-start w-full';
-
 export const head = 'flex flex-col gap-4 items-start';
 
 export const title = 'font-sans font-black text-[24px] leading-[32px] text-black';
