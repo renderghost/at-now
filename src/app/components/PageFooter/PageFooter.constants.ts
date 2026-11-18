@@ -1,0 +1,18 @@
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+export const LEGAL_LINKS: NavLink[] = [
+  { label: 'Impressum', href: 'https://renderg.host/impressum' },
+  { label: 'Privacy', href: 'https://renderg.host/privacy' },
+];
+
+export const SOCIAL_LINKS: NavLink[] = [
+  { label: 'Bluesky', href: 'https://bsky.app/profile/renderg.host' },
+  { label: 'Calendar', href: 'https://cal.com/renderghost' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/barrymprendergast' },
+  { label: 'Mail', href: 'mailto:contact@renderg.host' },
+];
+
+export const DEFAULT_COPYRIGHT = `© ${new Date().getFullYear()} Barry Prendergast`;

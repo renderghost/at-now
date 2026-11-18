@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#130DF2" />
+    <title>Now — Barry Prendergast</title>
+    <meta name="description" content="What Barry Prendergast is doing now, assembled live from his open social data." />
+    <meta name="author" content="Barry Prendergast" />
+
+    <meta property="og:site_name" content="Barry Prendergast" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://now.renderg.host" />
+    <meta property="og:title" content="Now — Barry Prendergast" />
+    <meta property="og:description" content="What Barry Prendergast is doing now, assembled live from his open social data." />
+    <meta property="og:image" content="https://renderg.host/art/opengraph/opengraph.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Now — Barry Prendergast" />
+    <meta name="twitter:description" content="What Barry Prendergast is doing now, assembled live from his open social data." />
+    <meta name="twitter:image" content="https://renderg.host/art/opengraph/opengraph.jpg" />
+    <script>
+      // Match renderg.host: set dark mode class from system preference before render
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>
