@@ -1,6 +1,6 @@
 export const row = 'flex gap-16 items-start w-full';
 
-export const thumb = 'w-[64px] h-[64px] object-cover shrink-0 bg-black-06';
+export const thumb = 'w-[64px] h-[64px] object-cover shrink-0';
 
 export const body = 'flex flex-col gap-4 items-start min-w-0';
 

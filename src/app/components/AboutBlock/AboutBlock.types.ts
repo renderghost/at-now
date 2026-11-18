@@ -1,5 +1,5 @@
 import type { NowPayload } from '@/core/types';
 
-export interface FootprintBlockProps {
+export interface AboutBlockProps {
   footprint: NowPayload['footprint'];
 }

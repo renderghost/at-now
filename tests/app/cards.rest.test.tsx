@@ -74,7 +74,8 @@ describe('BlockListening', () => {
       lastPlayed: { key: 'p', at: AT, app: 'teal', track: 'nai palm', artist: 'nate' },
     };
     render(<BlockListening theme={theme} now={NOW} />);
-    expect(screen.getByText('13 plays in the last 30 days')).toBeTruthy();
+    expect(screen.getByText('13')).toBeTruthy();
+    expect(screen.getByText('plays in the last 30 days')).toBeTruthy();
     expect(screen.getByText(/Last played: nai palm — nate/)).toBeTruthy();
     expect(screen.getByText('Top artists')).toBeTruthy();
   });

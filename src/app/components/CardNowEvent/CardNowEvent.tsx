@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import { Link } from '@/app/components/Link/Link';
 import { NowImage } from '@/app/components/NowImage/NowImage';
@@ -28,22 +29,22 @@ export const CardNowEvent: React.FC<CardNowEventProps> = ({ item, now }) => {
   ].filter(Boolean);
 
   return (
-    <article className={styles.card}>
-      {item.imageUrl && <NowImage src={item.imageUrl} alt="" className={styles.image} />}
-      <div className={styles.body}>
-        <div className={styles.titleRow}>
+    <Card as="article" className="justify-between">
+      <div className={styles.row}>
+        {item.imageUrl && <NowImage src={item.imageUrl} alt="" className={styles.image} />}
+        <div className={styles.body}>
+          <span className={styles.tag}>{RSVP_LABELS[item.rsvp]}</span>
           <h3 className={styles.title}>
             {item.href ? <Link href={item.href} label={item.name} color="black" size="large" wrap /> : item.name}
           </h3>
-          <span className={styles.tag}>{RSVP_LABELS[item.rsvp]}</span>
+          {meta.length > 0 && (
+            <p className={styles.metaText} data-part="event-meta">
+              {meta.join(' · ')}
+            </p>
+          )}
         </div>
-        {meta.length > 0 && (
-          <p className={styles.metaText} data-part="event-meta">
-            {meta.join(' · ')}
-          </p>
-        )}
-        <ItemMeta at={item.at} app={item.app} now={now} prefix={item.past ? 'was' : undefined} />
       </div>
-    </article>
+      <ItemMeta at={item.at} app={item.app} now={now} prefix={item.past ? 'was' : undefined} />
+    </Card>
   );
 };

@@ -118,3 +118,16 @@ export function formatDate(at: Date, precision: 'day' | 'month' = 'day'): string
     timeZone: precision === 'month' ? 'UTC' : undefined,
   }).format(at);
 }
+
+/** "Wednesday 18 November 2026": British order, no comma after the weekday. */
+export function formatLongDate(at: Date): string {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).formatToParts(at);
+  const get = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((p) => p.type === type)?.value ?? '';
+  return `${get('weekday')} ${get('day')} ${get('month')} ${get('year')}`;
+}

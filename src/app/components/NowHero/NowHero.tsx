@@ -1,36 +1,48 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { Link } from '@/app/components/Link/Link';
 import { ProfileIdentity } from '@/app/components/ProfileIdentity/ProfileIdentity';
 import { StatusLine } from '@/app/components/StatusLine/StatusLine';
-import { HOME_URL, NOW_ABOUT_URL, TITLE } from './NowHero.constants';
+import { formatLongDate, relativeTime } from '@/core/time';
+import { HOME_URL, LOADING_LABEL, TITLE, updatedLabel } from './NowHero.constants';
 import * as styles from './NowHero.styles';
 import type { NowHeroProps } from './NowHero.types';
 
-/** Identity, what a now page is, and the current status. */
-export const NowHero: React.FC<NowHeroProps> = ({ profile, status, now }) => (
-  <header className={styles.header}>
-    <div className={styles.inner}>
-      <div className={styles.topRow}>
-        <Link href={HOME_URL} label="renderg.host" color="blue" icon="left" iconChar="←" />
-      </div>
+/** One full-width card: back link, the Now title, and Barry's profile card. */
+export const NowHero: React.FC<NowHeroProps> = ({ profile, status, generatedAt, now }) => {
+  const built = generatedAt ? new Date(generatedAt) : null;
 
-      <div className={styles.content}>
-        {profile && <ProfileIdentity profile={profile} />}
-
-        <div className={styles.nowBlock}>
-          <h1 className={styles.title}>{TITLE}</h1>
-          <p className={styles.explainer}>
-            A now page says what I’m focused on at this point in my life, an idea from Derek
-            Sivers’{' '}
-            <a href={NOW_ABOUT_URL} className={styles.inlineLink} target="_blank" rel="noopener noreferrer">
-              nownownow.com
-            </a>
-            . Unlike most, this one writes itself from my open social data on the AT Protocol. It
-            covers the last 30 days, with anything from the past week marked Now.
-          </p>
-          {status && <StatusLine status={status} now={now} />}
-        </div>
+  return (
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        <Card>
+          <Link href={HOME_URL} label="renderg.host" color="blue" icon="left" iconChar="←" />
+          <div className={styles.grid}>
+            <div className={styles.titleBlock}>
+              <h1 className={styles.title}>{TITLE}</h1>
+              <p className={styles.date}>{formatLongDate(now)}</p>
+              <p className={styles.updated}>
+                <span className={styles.pulseWrap} aria-hidden="true">
+                  <span className={styles.pulse} data-part="live-pulse" />
+                  <span className={styles.dot} />
+                </span>
+                {built ? updatedLabel(relativeTime(built, now)) : LOADING_LABEL}
+              </p>
+            </div>
+            <div className={styles.profileSlot}>
+              {profile ? (
+                <ProfileIdentity profile={profile} status={status} now={now} />
+              ) : (
+                status && (
+                  <Card tone="tint">
+                    <StatusLine status={status} now={now} />
+                  </Card>
+                )
+              )}
+            </div>
+          </div>
+        </Card>
       </div>
-    </div>
-  </header>
-);
+    </header>
+  );
+};

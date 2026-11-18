@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from '@/app/components/Card/Card';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import { Link } from '@/app/components/Link/Link';
 import { NowImage } from '@/app/components/NowImage/NowImage';
@@ -16,7 +17,7 @@ export const BlockInteractions: React.FC<BlockInteractionsProps> = ({
   block,
   now,
 }) => (
-  <div className={styles.wrapper}>
+  <Card>
     <p className={styles.subtitle}>{title}</p>
     <p className={styles.summary}>
       {verb} {number.format(block.total)}
@@ -45,5 +46,5 @@ export const BlockInteractions: React.FC<BlockInteractionsProps> = ({
         ))}
       </ul>
     )}
-  </div>
+  </Card>
 );

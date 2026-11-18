@@ -1,8 +1,8 @@
-export const card = 'flex flex-col md:flex-row gap-24 items-start p-24 sm:p-32 w-full bg-white';
+export const cover = 'w-full aspect-[5/2] object-cover';
 
-export const cover = 'w-full md:w-[200px] aspect-video object-cover shrink-0 bg-black-06';
+export const body = 'flex flex-col gap-16 items-start justify-between w-full h-full p-24 sm:p-32';
 
-export const body = 'flex flex-col gap-16 items-start w-full min-w-0';
+export const text = 'flex flex-col gap-8 items-start w-full';
 
 export const overline =
   'font-sans font-semibold text-sm leading-[20px] text-dimgray tracking-[1px] uppercase';

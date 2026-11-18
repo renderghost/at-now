@@ -48,7 +48,7 @@ describe('Now page', () => {
       'Social',
       'At a glance',
       'Elsewhere',
-      'Made from my PDS',
+      'About this page',
     ]);
   });
 
@@ -70,13 +70,32 @@ describe('Now page', () => {
   it('renders the footprint', async () => {
     serve(payload);
     render(<App now={NOW} />);
-    const footprint = await screen.findByRole('region', { name: 'Made from my PDS' });
+    const footprint = await screen.findByRole('region', { name: 'About this page' });
     expect(
       within(footprint).getByText(
         'Built live from 34 collections across 16 apps, hosted on eurosky.social:'
       )
     ).toBeTruthy();
-    expect(within(footprint).getAllByRole('link')).toHaveLength(16);
+    expect(within(footprint).getAllByRole('link')).toHaveLength(17);
+  });
+
+  it('puts every theme’s content in cards', async () => {
+    serve(payload);
+    render(<App now={NOW} />);
+    await screen.findByRole('region', { name: 'Working' });
+    for (const name of ['Working', 'Going', 'Writing', 'Making', 'Reading', 'Listening', 'Posting', 'Saving', 'Social', 'At a glance', 'Elsewhere']) {
+      expect(section(name).querySelectorAll('[data-card]').length).toBeGreaterThan(0);
+    }
+  });
+
+  it('uses no dividers', async () => {
+    serve(payload);
+    const { container } = render(<App now={NOW} />);
+    await screen.findByRole('region', { name: 'Working' });
+    const bordered = [...container.querySelectorAll('[class]')].filter((el) =>
+      /(^|\s)border(-[a-z]+)?(\s|$)|border-t|border-b|divide-/.test(el.getAttribute('class') ?? '')
+    );
+    expect(bordered).toEqual([]);
   });
 
   it('renders the identity header once loaded', async () => {

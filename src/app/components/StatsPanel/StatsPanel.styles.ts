@@ -4,9 +4,7 @@ export const wrapper = 'flex flex-col items-start gap-16 w-full';
 export const title =
   'font-sans font-semibold text-base leading-[24px] text-dimgray tracking-[1px] uppercase';
 
-export const grid = 'grid grid-cols-1 sm:grid-cols-3 gap-24 sm:gap-32 w-full lg:w-2/3';
-
-export const group = 'flex flex-col gap-16 items-start';
+export const grid = 'grid grid-cols-1 md:grid-cols-3 gap-8 w-full';
 
 export const groupTitle =
   'font-sans font-semibold text-sm leading-[20px] text-dimgray tracking-[1px] uppercase';
