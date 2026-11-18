@@ -22,29 +22,41 @@ const renderHero = (overrides: Partial<NowPayload> = {}) => {
 };
 
 describe('NowHero', () => {
-  it('features the Now title in a yellow card with the full date', () => {
-    renderHero();
-    const title = screen.getByRole('heading', { level: 1, name: 'Now' });
-    const card = title.closest('[data-card]');
-    expect(card?.className).toContain('bg-yellow');
-    expect(card?.textContent).toContain('Wednesday 18 November 2026');
-    expect(card?.textContent).toContain('Refreshed just now from my PDS');
-    expect(card?.textContent).toContain('Live');
+  const nowCard = () =>
+    screen.getByRole('heading', { level: 1, name: 'Now' }).closest('[data-card]')!;
+
+  it('puts the Now title in a full-width white card with the date', () => {
+    const { container } = renderHero();
+    const card = nowCard();
+    expect(card.className).toContain('bg-white');
+    expect(card.textContent).toContain('Wednesday 18 November 2026');
+    expect(container.querySelector('.bg-yellow')).toBeNull();
   });
 
-  it('only pulses for visitors who allow motion', () => {
-    const { container } = renderHero();
-    const pulse = container.querySelector('[data-part="live-pulse"]');
+  it('starts the card with the back link', () => {
+    renderHero();
+    const back = screen.getByRole('link', { name: /^←\s*renderg\.host$/ });
+    expect(back.getAttribute('href')).toBe('https://renderg.host/');
+    expect(back.closest('[data-card]')).toBe(nowCard());
+    expect(nowCard().querySelector('a')).toBe(back);
+  });
+
+  it('shows the live dot beside "Last updated"', () => {
+    renderHero();
+    const label = screen.getByText(/Last updated just now/);
+    const pulse = label.closest('p')?.querySelector('[data-part="live-pulse"]');
+    expect(pulse).toBeTruthy();
     expect(pulse?.className).toContain('motion-safe:animate-ping');
     expect(pulse?.className).not.toMatch(/(^|\s)animate-ping/);
+    expect(nowCard().textContent).not.toContain('Refreshed');
   });
 
-  it('sits beside the profile card on wide screens', () => {
+  it('nests the tinted profile card inside the Now card', () => {
     renderHero();
-    const feature = screen.getByRole('heading', { level: 1, name: 'Now' }).closest('[data-card]');
-    const profile = screen.getByText('B. Prendergast').closest('[data-card]');
-    expect(feature?.parentElement?.className).toContain('lg:grid-cols-3');
-    expect(profile?.parentElement?.className).toContain('lg:col-span-2');
+    const profile = screen.getByText('B. Prendergast').closest('[data-card]')!;
+    expect(profile).not.toBe(nowCard());
+    expect(profile.parentElement?.closest('[data-card]')).toBe(nowCard());
+    expect(profile.className).toContain('bg-whitesmoke');
   });
 
   it('wraps the Bluesky identity in a card with the banner', () => {

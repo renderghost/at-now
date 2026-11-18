@@ -9,7 +9,7 @@ export const bodyNoBanner = 'pt-24 sm:pt-32';
 export const avatarSlot = 'h-[48px] w-full';
 
 export const avatarLifted =
-  'w-[96px] h-[96px] rounded-circular object-cover ring-4 ring-white -translate-y-1/2';
+  'w-[96px] h-[96px] rounded-circular object-cover ring-4 ring-whitesmoke -translate-y-1/2';
 
 export const avatar = 'w-[96px] h-[96px] rounded-circular object-cover';
 
@@ -27,4 +27,4 @@ export const handle =
 export const bio =
   'font-sans font-medium text-base leading-[28px] text-black whitespace-pre-line break-words';
 
-export const status = 'bg-whitesmoke p-16 w-full';
+export const status = 'bg-white p-16 w-full';

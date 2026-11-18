@@ -5,7 +5,7 @@ export interface CardProps {
   as?: 'article' | 'div' | 'section';
   /** 'default' p-24/p-32, 'compact' p-16/p-24 (media grids), 'none' (full-bleed media). */
   padding?: 'default' | 'compact' | 'none';
-  /** 'yellow' is reserved for the featured Now card (the Now badge colour). */
-  tone?: 'white' | 'yellow';
+  /** 'tint' is for a card nested inside a white card. */
+  tone?: 'white' | 'tint';
   className?: string;
 }

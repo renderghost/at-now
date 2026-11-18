@@ -5,7 +5,7 @@ export const base = 'flex flex-col items-start w-full h-full overflow-hidden';
 
 export const tone: Record<NonNullable<CardProps['tone']>, string> = {
   white: 'bg-white',
-  yellow: 'bg-yellow',
+  tint: 'bg-whitesmoke',
 };
 
 export const padding: Record<NonNullable<CardProps['padding']>, string> = {

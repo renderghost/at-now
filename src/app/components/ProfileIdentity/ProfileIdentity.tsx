@@ -13,7 +13,7 @@ export const ProfileIdentity: React.FC<ProfileIdentityProps> = ({ profile, statu
   const hasBanner = Boolean(profile.bannerUrl);
 
   return (
-    <Card padding="none">
+    <Card padding="none" tone="tint">
       {hasBanner && <NowImage src={profile.bannerUrl} alt="" className={styles.banner} />}
       <div className={mergeClasses(styles.body, !hasBanner && styles.bodyNoBanner)}>
         {profile.avatarUrl &&
