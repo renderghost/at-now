@@ -9,4 +9,5 @@ export interface ItemMetaProps {
   prefix?: string;
   /** Hide the Now badge (e.g. when the card already shows it). */
   hideBadge?: boolean;
+  tone?: 'onLight' | 'onBlue';
 }

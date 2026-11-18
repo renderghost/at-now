@@ -21,10 +21,52 @@ describe('buildNow', () => {
       'social',
     ]);
     expect(payload.status).toBeNull();
-    expect(payload.footprint.collections).toBe(30);
+    expect(payload.footprint.collections).toBe(34);
     expect(payload.diagnostics).toEqual([]);
     expect(payload.generatedAt).toBe(NOW.toISOString());
     expect(JSON.parse(JSON.stringify(payload))).toEqual(payload);
+  });
+
+  it('includes the identity profile', async () => {
+    const payload = await buildNow(createFakeSource(), NOW);
+    expect(payload.profile).toMatchObject({
+      handle: 'renderg.host',
+      displayName: 'B. Prendergast',
+      pronouns: 'he/him',
+      location: 'Berlin, DE',
+      counts: { followers: 2461, following: 217, posts: 6168 },
+    });
+  });
+
+  it('computes top-line stats over full windows', async () => {
+    const payload = await buildNow(createFakeSource(), NOW);
+    expect(payload.stats).toMatchObject({
+      postsThisWeek: 64,
+      appreciated: 119,
+      appreciatedCapped: false,
+      booksOnTheGo: 2,
+      plays: 13,
+      tracksPublished: 7,
+      eventsUpcoming: 1,
+    });
+    const social = payload.themes.find((t) => t.id === 'social');
+    expect(payload.stats.followed).toBe(
+      social && 'following' in social ? social.following?.total : -1
+    );
+  });
+
+  it('keeps going without a profile', async () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const payload = await buildNow(
+      createFakeSource({ failList: (nsid) => nsid === 'app.bsky.actor.profile' }),
+      NOW
+    );
+    spy.mockRestore();
+    expect(payload.profile).toBeNull();
+    expect(payload.themes.length).toBeGreaterThan(0);
+    expect(payload.diagnostics).toEqual([
+      expect.objectContaining({ scope: 'profile' }),
+    ]);
   });
 
   it('isolates a failing theme', async () => {

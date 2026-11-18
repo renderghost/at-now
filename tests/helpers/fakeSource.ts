@@ -67,6 +67,20 @@ export function createFakeSource(opts: FakeSourceOptions = {}): AtSource {
       const known = readFixture<PostView[]>('posts.json');
       return known.filter((p) => uris.includes(p.uri));
     },
+    async getProfile() {
+      const p = readFixture<{
+        followersCount: number;
+        followsCount: number;
+        postsCount: number;
+        createdAt: string;
+      }>('appview-profile.json');
+      return {
+        followers: p.followersCount,
+        following: p.followsCount,
+        posts: p.postsCount,
+        joinedAt: p.createdAt,
+      };
+    },
     async resolvePds() {
       return 'https://fixture.example';
     },

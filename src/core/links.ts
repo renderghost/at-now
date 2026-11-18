@@ -45,6 +45,13 @@ export function parseAtUri(
   return { did: match[1], collection: match[2], rkey: match[3] };
 }
 
+/** Profile images through the Bluesky image CDN. */
+export const avatarUrl = (did: string, cid: string): string =>
+  `${CDN_URL}/img/avatar/plain/${did}/${cid}@jpeg`;
+
+export const bannerUrl = (did: string, cid: string): string =>
+  `${CDN_URL}/img/banner/plain/${did}/${cid}@jpeg`;
+
 /** A blob served through the Bluesky image CDN (feed thumbnail size). */
 export const cdnImageUrl = (did: string, cid: string): string =>
   `${CDN_URL}/img/feed_thumbnail/plain/${did}/${cid}@jpeg`;

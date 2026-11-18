@@ -30,6 +30,11 @@ export const APPS: Record<AppId, AppRef> = {
   currents: { id: 'currents', name: 'Currents', url: 'https://currents.is' },
   grain: { id: 'grain', name: 'Grain', url: 'https://grain.social' },
   leaflet: { id: 'leaflet', name: 'Leaflet', url: 'https://leaflet.pub' },
+  nearhorizon: {
+    id: 'nearhorizon',
+    name: 'Near Horizon',
+    url: 'https://nearhorizon.app',
+  },
   plyr: { id: 'plyr', name: 'plyr.fm', url: 'https://plyr.fm' },
   semble: { id: 'semble', name: 'Semble', url: 'https://semble.so' },
   sifa: { id: 'sifa', name: 'Sifa', url: 'https://sifa.id' },
@@ -61,7 +66,7 @@ export const APPS: Record<AppId, AppRef> = {
 export interface CollectionSpec {
   nsid: string;
   app: AppId;
-  theme: ThemeId | 'status';
+  theme: ThemeId | 'status' | 'profile';
   /** 'since': TID-keyed and high-volume, fetched by time window. */
   strategy: 'all' | 'since';
 }
@@ -69,11 +74,15 @@ export interface CollectionSpec {
 const c = (
   nsid: string,
   app: AppId,
-  theme: ThemeId | 'status',
+  theme: ThemeId | 'status' | 'profile',
   strategy: 'all' | 'since' = 'all'
 ): CollectionSpec => ({ nsid, app, theme, strategy });
 
 export const COLLECTIONS: readonly CollectionSpec[] = [
+  c('app.bsky.actor.profile', 'bluesky', 'profile'),
+  c('app.bsky.actor.link', 'bluesky', 'profile'),
+  c('app.nearhorizon.actor.pronouns', 'nearhorizon', 'profile'),
+  c('id.sifa.profile.location', 'sifa', 'profile'),
   c('io.zzstoatzz.status.record', 'status', 'status'),
   c('id.sifa.profile.position', 'sifa', 'working'),
   c('community.lexicon.calendar.rsvp', 'smokesignal', 'going'),
@@ -125,5 +134,9 @@ export function footprint(): NowPayload['footprint'] {
   const apps = appIds
     .map((id) => APPS[id])
     .sort((a, b) => a.name.localeCompare(b.name, 'en-GB'));
-  return { collections: COLLECTIONS.length, apps };
+  return {
+    collections: COLLECTIONS.length,
+    apps,
+    pdsHost: new URL(IDENTITY.pdsUrl).host,
+  };
 }

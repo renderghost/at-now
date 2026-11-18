@@ -15,6 +15,6 @@ export const StatusLine: React.FC<StatusLineProps> = ({ status, now }) => (
       )}{' '}
       {SUBJECT} {status.text}
     </p>
-    <ItemMeta at={status.at} app={status.app} now={now} prefix="set" />
+    <ItemMeta at={status.at} app={status.app} now={now} prefix="set" tone="onBlue" />
   </div>
 );

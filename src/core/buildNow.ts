@@ -1,7 +1,15 @@
 import type { AtRecord, AtSource, ListResult } from './atproto/types.js';
-import { COLLECTIONS, THEME_ORDER, WINDOW_DAYS, footprint } from './config.js';
+import {
+  COLLECTIONS,
+  IDENTITY,
+  THEME_ORDER,
+  WINDOW_DAYS,
+  footprint,
+} from './config.js';
 import type {
+  ActorLink,
   BookRecord,
+  BskyProfile,
   BskyPost,
   CalendarEvent,
   CosmikCard,
@@ -13,7 +21,9 @@ import type {
   LeafletDocument,
   PlyrTrack,
   PositionRecord,
+  PronounsRecord,
   RsvpRecord,
+  SifaLocation,
   StandardDocument,
   StandardPublication,
   StatusRecord,
@@ -25,6 +35,7 @@ import { selectListening } from './themes/listening.js';
 import { selectMaking } from './themes/making.js';
 import { selectPhotographing } from './themes/photographing.js';
 import { selectPosting } from './themes/posting.js';
+import { selectProfile } from './themes/profile.js';
 import { selectReading } from './themes/reading.js';
 import { selectSaving } from './themes/saving.js';
 import {
@@ -39,7 +50,14 @@ import type { Group } from './themes/social.js';
 import { selectStatus } from './themes/status.js';
 import { selectWorking } from './themes/working.js';
 import { selectWriting } from './themes/writing.js';
-import type { Diagnostic, NowPayload, Theme, ThemeId } from './types.js';
+import type {
+  Diagnostic,
+  NowPayload,
+  NowProfile,
+  NowStats,
+  Theme,
+  ThemeId,
+} from './types.js';
 
 const DAY = 86_400_000;
 
@@ -97,6 +115,28 @@ export async function buildNow(source: AtSource, now: Date): Promise<NowPayload>
       })
     );
 
+  // Full-window counts for the header stats, filled in as themes build.
+  const fullCounts = { eventsUpcoming: 0, booksOnTheGo: 0, tracksPublished: 0 };
+
+  const profile = async (): Promise<NowProfile | null> => {
+    try {
+      const counts = await source.getProfile(IDENTITY.did).catch((err) => {
+        report('profile', err);
+        return null;
+      });
+      return selectProfile(
+        await list<BskyProfile>('app.bsky.actor.profile'),
+        await list<ActorLink>('app.bsky.actor.link').catch(() => []),
+        await list<PronounsRecord>('app.nearhorizon.actor.pronouns').catch(() => []),
+        await list<SifaLocation>('id.sifa.profile.location').catch(() => []),
+        counts
+      );
+    } catch (err) {
+      report('profile', err);
+      return null;
+    }
+  };
+
   const theme = async (
     id: ThemeId | 'status',
     build: () => Promise<Theme | null>
@@ -123,6 +163,9 @@ export async function buildNow(source: AtSource, now: Date): Promise<NowPayload>
         report('going', result.reason);
       }
     });
+    fullCounts.eventsUpcoming = selectGoing(rsvps, events, now, Infinity).filter(
+      (e) => !e.past
+    ).length;
     return { id: 'going', items: selectGoing(rsvps, events, now) };
   };
 
@@ -135,7 +178,8 @@ export async function buildNow(source: AtSource, now: Date): Promise<NowPayload>
     }
   };
 
-  const [statusResult, ...themes] = await Promise.all([
+  const [profileResult, statusResult, ...themes] = await Promise.all([
+    profile(),
     (async () => {
       try {
         return selectStatus(
@@ -161,14 +205,12 @@ export async function buildNow(source: AtSource, now: Date): Promise<NowPayload>
         now
       ),
     })),
-    theme('making', async () => ({
-      id: 'making',
-      ...selectMaking(
-        await list<TangledRepo>('sh.tangled.repo'),
-        await list<PlyrTrack>('fm.plyr.track'),
-        now
-      ),
-    })),
+    theme('making', async () => {
+      const repos = await list<TangledRepo>('sh.tangled.repo');
+      const tracks = await list<PlyrTrack>('fm.plyr.track');
+      fullCounts.tracksPublished = selectMaking([], tracks, now, Infinity).tracks.length;
+      return { id: 'making', ...selectMaking(repos, tracks, now) };
+    }),
     theme('photographing', async () => ({
       id: 'photographing',
       galleries: selectPhotographing(
@@ -178,10 +220,13 @@ export async function buildNow(source: AtSource, now: Date): Promise<NowPayload>
         now
       ),
     })),
-    theme('reading', async () => ({
-      id: 'reading',
-      items: selectReading(await list<BookRecord>('buzz.bookhive.book'), now),
-    })),
+    theme('reading', async () => {
+      const books = await list<BookRecord>('buzz.bookhive.book');
+      fullCounts.booksOnTheGo = selectReading(books, now, Infinity).filter(
+        (b) => b.status === 'reading'
+      ).length;
+      return { id: 'reading', items: selectReading(books, now) };
+    }),
     theme('listening', async () =>
       selectListening(await list<TealPlay>('fm.teal.feed.play'), now)
     ),
@@ -215,9 +260,25 @@ export async function buildNow(source: AtSource, now: Date): Promise<NowPayload>
     (t): t is Theme => Boolean(t)
   );
 
+  const find = <K extends Theme['id']>(id: K) =>
+    ordered.find((t): t is Extract<Theme, { id: K }> => t.id === id);
+  const social = find('social');
+  const stats: NowStats = {
+    postsThisWeek: find('posting')?.weekCount ?? 0,
+    appreciated: social?.appreciated?.total ?? 0,
+    appreciatedCapped: social?.appreciated?.capped ?? false,
+    followed: social?.following?.total ?? 0,
+    booksOnTheGo: fullCounts.booksOnTheGo,
+    plays: find('listening')?.playCount ?? 0,
+    tracksPublished: fullCounts.tracksPublished,
+    eventsUpcoming: fullCounts.eventsUpcoming,
+  };
+
   return {
     generatedAt: now.toISOString(),
+    profile: profileResult,
     status: statusResult,
+    stats,
     themes: ordered,
     footprint: footprint(),
     diagnostics,

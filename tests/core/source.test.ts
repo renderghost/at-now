@@ -112,3 +112,26 @@ describe('createHttpSource', () => {
     );
   });
 });
+
+describe('getProfile', () => {
+  it('reads Bluesky totals from the AppView', async () => {
+    const fetchImpl = vi.fn(async (_url: string | URL | Request) =>
+      json({
+        did: 'did:plc:me',
+        handle: 'me.test',
+        followersCount: 3,
+        followsCount: 2,
+        postsCount: 1,
+        createdAt: '2025-01-01T00:00:00Z',
+      })
+    );
+    const source = sourceWith(fetchImpl as unknown as typeof fetch);
+    expect(await source.getProfile('did:plc:me')).toEqual({
+      followers: 3,
+      following: 2,
+      posts: 1,
+      joinedAt: '2025-01-01T00:00:00Z',
+    });
+    expect(String(fetchImpl.mock.calls[0][0])).toContain('app.bsky.actor.getProfile?actor=did%3Aplc%3Ame');
+  });
+});

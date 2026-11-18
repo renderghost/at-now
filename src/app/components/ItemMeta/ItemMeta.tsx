@@ -12,6 +12,7 @@ export const ItemMeta: React.FC<ItemMetaProps> = ({
   now,
   prefix,
   hideBadge = false,
+  tone = 'onLight',
 }) => {
   const date = new Date(at);
   const valid = !Number.isNaN(date.getTime());
@@ -21,17 +22,17 @@ export const ItemMeta: React.FC<ItemMetaProps> = ({
     <div className={row}>
       {isNow && !hideBadge && <NowBadge />}
       {valid && (
-        <time dateTime={at} title={formatDate(date)} className={time}>
+        <time dateTime={at} title={formatDate(date)} className={time[tone]}>
           {prefix ? `${prefix} ` : ''}
           {relativeTime(date, now)}
         </time>
       )}
       {valid && (
-        <span className={separator} aria-hidden="true">
+        <span className={separator[tone]} aria-hidden="true">
           ·
         </span>
       )}
-      <AppLabel app={app} />
+      <AppLabel app={app} tone={tone} />
     </div>
   );
 };

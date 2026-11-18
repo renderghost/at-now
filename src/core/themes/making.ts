@@ -7,7 +7,8 @@ import type { RepoItem, TrackItem } from '../types.js';
 
 const recent = <T extends { createdAt: string }>(
   records: AtRecord<T>[],
-  now: Date
+  now: Date,
+  limit: number
 ) =>
   records
     .map((rec) => ({ rec, at: parseDate(rec.value.createdAt) }))
@@ -15,16 +16,17 @@ const recent = <T extends { createdAt: string }>(
       d.at !== null && isWithinWindow(d.at, now)
     )
     .sort((a, b) => b.at.getTime() - a.at.getTime())
-    .slice(0, LIMIT);
+    .slice(0, limit);
 
 /** Code repositories and published music from the last 30 days. */
 export function selectMaking(
   repos: AtRecord<TangledRepo>[],
   tracks: AtRecord<PlyrTrack>[],
-  now: Date
+  now: Date,
+  limit = LIMIT
 ): { repos: RepoItem[]; tracks: TrackItem[] } {
   return {
-    repos: recent(repos, now).map(({ rec, at }) => ({
+    repos: recent(repos, now, limit).map(({ rec, at }) => ({
       key: rec.uri,
       at: at.toISOString(),
       app: 'tangled',
@@ -32,7 +34,7 @@ export function selectMaking(
       name: rec.value.name,
       description: rec.value.description || undefined,
     })),
-    tracks: recent(tracks, now).map(({ rec, at }) => ({
+    tracks: recent(tracks, now, limit).map(({ rec, at }) => ({
       key: rec.uri,
       at: at.toISOString(),
       app: 'plyr',

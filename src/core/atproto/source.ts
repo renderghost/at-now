@@ -144,6 +144,27 @@ export function createHttpSource(opts: HttpSourceOptions): AtSource {
       return batches.flatMap((b) => b.profiles.map(toProfile));
     },
 
+    async getProfile(actor: string) {
+      const params = new URLSearchParams({ actor });
+      try {
+        const p = await get<{
+          followersCount?: number;
+          followsCount?: number;
+          postsCount?: number;
+          createdAt?: string;
+        }>(`${opts.appviewUrl}/xrpc/app.bsky.actor.getProfile?${params}`);
+        return {
+          followers: p.followersCount ?? 0,
+          following: p.followsCount ?? 0,
+          posts: p.postsCount ?? 0,
+          joinedAt: p.createdAt,
+        };
+      } catch (err) {
+        if (err instanceof HttpError && err.status === 400) return null;
+        throw err;
+      }
+    },
+
     async getPosts(uris: string[]) {
       const unique = [...new Set(uris)];
       const batches = await Promise.all(

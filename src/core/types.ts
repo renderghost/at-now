@@ -9,6 +9,7 @@ export type AppId =
   | 'currents'
   | 'grain'
   | 'leaflet'
+  | 'nearhorizon'
   | 'plyr'
   | 'semble'
   | 'sifa'
@@ -193,15 +194,58 @@ export type Theme =
       appreciated: InteractionBlock | null;
     };
 
+export interface ProfileLink {
+  title: string;
+  url: string;
+  iconUrl?: string;
+}
+
+export interface ProfileCounts {
+  followers: number;
+  following: number;
+  posts: number;
+  /** When the account was created (ISO). */
+  joinedAt?: string;
+}
+
+/** Barry's ATmosphere identity, for the page header. */
+export interface NowProfile {
+  did: string;
+  handle: string;
+  profileUrl: string;
+  displayName?: string;
+  bio?: string;
+  avatarUrl?: string;
+  bannerUrl?: string;
+  pronouns?: string;
+  location?: string;
+  links: ProfileLink[];
+  counts: ProfileCounts | null;
+}
+
+/** Top-line numbers, counted over full windows (not the 5-item limit). */
+export interface NowStats {
+  postsThisWeek: number;
+  appreciated: number;
+  appreciatedCapped: boolean;
+  followed: number;
+  booksOnTheGo: number;
+  plays: number;
+  tracksPublished: number;
+  eventsUpcoming: number;
+}
+
 export interface Diagnostic {
-  scope: ThemeId | 'status' | 'highlight';
+  scope: ThemeId | 'status' | 'profile' | 'highlight';
   message: string;
 }
 
 export interface NowPayload {
   generatedAt: string;
+  profile: NowProfile | null;
   status: StatusItem | null;
+  stats: NowStats;
   themes: Theme[];
-  footprint: { collections: number; apps: AppRef[] };
+  footprint: { collections: number; apps: AppRef[]; pdsHost: string };
   diagnostics: Diagnostic[];
 }

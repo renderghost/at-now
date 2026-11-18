@@ -7,8 +7,8 @@ import {
 } from '../../src/core/config.js';
 
 describe('collection registry', () => {
-  it('reads exactly 30 collections', () => {
-    expect(COLLECTIONS).toHaveLength(30);
+  it('reads exactly 34 collections', () => {
+    expect(COLLECTIONS).toHaveLength(34);
   });
 
   it('has no duplicate collections', () => {
@@ -51,8 +51,9 @@ describe('collection registry', () => {
 describe('footprint', () => {
   it('counts the collections and apps this page reads', () => {
     const fp = footprint();
-    expect(fp.collections).toBe(30);
-    expect(fp.apps).toHaveLength(15);
+    expect(fp.collections).toBe(34);
+    expect(fp.apps).toHaveLength(16);
+    expect(fp.pdsHost).toBe('eurosky.social');
   });
 
   it('lists apps alphabetically by name', () => {

@@ -224,3 +224,28 @@ export interface InteractionRecord {
   document?: string;
   createdAt?: string;
 }
+
+export interface BskyProfile {
+  displayName?: string;
+  description?: string;
+  avatar?: Blob;
+  banner?: Blob;
+  pronouns?: string;
+  links?: StrongRef[];
+}
+
+export interface ActorLink {
+  title?: string;
+  url: string;
+  icon?: Blob;
+}
+
+export interface PronounsRecord {
+  sets?: { forms?: string[] }[];
+}
+
+export interface SifaLocation {
+  address?: AddressLocation;
+  isPrimary?: boolean;
+  type?: string;
+}

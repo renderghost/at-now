@@ -70,9 +70,16 @@ describe('Now page', () => {
     render(<App now={NOW} />);
     const footprint = await screen.findByRole('region', { name: 'Made from my PDS' });
     expect(
-      within(footprint).getByText('Built live from 30 collections across 15 apps:')
+      within(footprint).getByText('Built live from 34 collections across 16 apps:')
     ).toBeTruthy();
-    expect(within(footprint).getAllByRole('link')).toHaveLength(15);
+    expect(within(footprint).getAllByRole('link')).toHaveLength(16);
+  });
+
+  it('renders the identity header once loaded', async () => {
+    serve(payload);
+    render(<App now={NOW} />);
+    expect(await screen.findByText('B. Prendergast')).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'At a glance' })).toBeTruthy();
   });
 
   it('renders the status line', async () => {
@@ -93,7 +100,7 @@ describe('Now page', () => {
     serve({ error: 'unavailable' }, 500);
     render(<App now={NOW} />);
     const main = screen.getByRole('main');
-    expect(within(main).getByRole('heading', { level: 1, name: 'Now' })).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1, name: 'Now' })).toBeTruthy();
     expect(await within(main).findByText(/I can’t fetch what I’ve been up to right now/)).toBeTruthy();
     expect(
       within(main).getByRole('link', { name: 'renderg.host' }).getAttribute('href')

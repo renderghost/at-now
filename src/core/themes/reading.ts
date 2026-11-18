@@ -15,7 +15,8 @@ type Status = BookItem['status'];
  */
 export function selectReading(
   records: AtRecord<BookRecord>[],
-  now: Date
+  now: Date,
+  limit = LIMIT
 ): BookItem[] {
   const items: BookItem[] = [];
 
@@ -56,5 +57,5 @@ export function selectReading(
       const reading = Number(b.status === 'reading') - Number(a.status === 'reading');
       return reading || Date.parse(b.at) - Date.parse(a.at);
     })
-    .slice(0, LIMIT);
+    .slice(0, limit);
 }

@@ -28,7 +28,8 @@ export function eventUris(rsvps: AtRecord<RsvpRecord>[]): string[] {
 export function selectGoing(
   rsvps: AtRecord<RsvpRecord>[],
   events: Map<string, CalendarEvent>,
-  now: Date
+  now: Date,
+  limit = LIMIT
 ): EventItem[] {
   const items: (EventItem & { sortAt: number })[] = [];
 
@@ -82,6 +83,6 @@ export function selectGoing(
     .sort((a, b) => b.sortAt - a.sortAt);
 
   return [...upcoming, ...recent]
-    .slice(0, LIMIT)
+    .slice(0, limit)
     .map(({ sortAt: _s, ...item }) => item);
 }
