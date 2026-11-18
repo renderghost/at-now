@@ -18,7 +18,8 @@ export function selectStatus(
     .map((rec) => ({ rec, at: recordDate(rec) }))
     .filter((d): d is { rec: AtRecord<StatusRecord>; at: Date } => d.at !== null);
   const [latest] = newestFirst(dated, (d) => d.at);
-  if (!latest?.rec.value.text) return null;
+  const text = latest?.rec.value.text;
+  if (!latest || !text) return null;
 
   const { value } = latest.rec;
   const expires = parseDate(value.expires);
@@ -33,7 +34,7 @@ export function selectStatus(
     at: latest.at.toISOString(),
     app: 'status',
     href: statusUrl(IDENTITY.handle),
-    text: value.text,
+    text,
     emoji,
     expires: expires?.toISOString(),
   };
