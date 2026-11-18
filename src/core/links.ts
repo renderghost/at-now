@@ -1,4 +1,4 @@
-import { APPS } from './config.js';
+import { APPS, CDN_URL } from './config.js';
 import type { AppId } from './types.js';
 
 /** Web links into each app. Patterns verified against the live apps. */
@@ -34,3 +34,11 @@ export function parseAtUri(
   if (!match) return null;
   return { did: match[1], collection: match[2], rkey: match[3] };
 }
+
+/** A blob served through the Bluesky image CDN (feed thumbnail size). */
+export const cdnImageUrl = (did: string, cid: string): string =>
+  `${CDN_URL}/img/feed_thumbnail/plain/${did}/${cid}@jpeg`;
+
+/** A blob served straight from a PDS. */
+export const pdsBlobUrl = (pdsUrl: string, did: string, cid: string): string =>
+  `${pdsUrl}/xrpc/com.atproto.sync.getBlob?did=${encodeURIComponent(did)}&cid=${encodeURIComponent(cid)}`;
