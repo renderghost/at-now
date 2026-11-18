@@ -1,0 +1,6 @@
+{
+  "regions": ["fra1"],
+  "functions": {
+    "api/now.ts": { "maxDuration": 30 }
+  }
+}

@@ -1,0 +1,248 @@
+[
+ {
+  "did": "did:plc:qrt5rykojeg5sbsajbu4zdke",
+  "handle": "kissane.myatproto.social",
+  "displayName": "Erin Kissane",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qrt5rykojeg5sbsajbu4zdke/bafkreibvmze62d44jrg5y56ki2y4iiobb5ri4xpypit722py4jep4nyxey"
+ },
+ {
+  "did": "did:plc:r2vpg2iszskbkegoldmqa322",
+  "handle": "essentialrandom.bsky.social",
+  "displayName": "Ms Boba (rebuilding community era)",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:r2vpg2iszskbkegoldmqa322/bafkreifzmcif2sjrwrozvgkwdc275ab5b7lq4esx2olxt3ybqfurhxhsgi"
+ },
+ {
+  "did": "did:plc:3xewinw4wtimo2lqfy5fm5sw",
+  "handle": "atmosphereconf.org",
+  "displayName": "AtmosphereConf",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3xewinw4wtimo2lqfy5fm5sw/bafkreic4x6vh4off6xzde43236zlnjs7mwfzbzweqrdag2pgfrwl2zawbm"
+ },
+ {
+  "did": "did:plc:lehcqqkwzcwvjvw66uthu5oq",
+  "handle": "atmosphere.community",
+  "displayName": "Atmosphere Community",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lehcqqkwzcwvjvw66uthu5oq/bafkreihlasv2wozkmvns4j2d2df46r4ydyl5yfzfmnsj3b7jz4j6quknda"
+ },
+ {
+  "did": "did:plc:mprdjqjluoswa7awzggaggj3",
+  "handle": "colibri.social",
+  "displayName": "Colibri Social",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mprdjqjluoswa7awzggaggj3/bafkreig2q5yn3h5zb54pssip55aucicrujjiadjexknggtbj6a45jmtpfm"
+ },
+ {
+  "did": "did:plc:hu2jmpvtlecuwqnosnloplx6",
+  "handle": "captaincalliope.at",
+  "displayName": "Lyre Calliope 🧭✨",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hu2jmpvtlecuwqnosnloplx6/bafkreibmf27a7ju4bdfamv4xxszl5w7kqgapnz237y53f2xgoolcwjrnwy"
+ },
+ {
+  "did": "did:plc:k644h4rq5bjfzcetgsa6tuby",
+  "handle": "natalie.sh",
+  "displayName": "midwest emo fan",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:k644h4rq5bjfzcetgsa6tuby/bafkreibjnhqfhangwgwam5msfpqu64qazduai7n25ttiiihnttcgeabnua"
+ },
+ {
+  "did": "did:plc:fip3nyk6tjo3senpq4ei2cxw",
+  "handle": "vicwalker.dev.br",
+  "displayName": "Victoria",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:fip3nyk6tjo3senpq4ei2cxw/bafkreif4moz6gujk2zn2kirrcl2mqgsdrherrxpsu3uiwjwbea7i5x5x7i"
+ },
+ {
+  "did": "did:plc:i7axoc3wbmtjdb3fum4pfoaw",
+  "handle": "mat.zelk.space",
+  "displayName": "Mathieu",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:i7axoc3wbmtjdb3fum4pfoaw/bafkreibtbixfnuaidis67iqgm2me5ajpesk32cra2xict3vi3guzx6ezga"
+ },
+ {
+  "did": "did:plc:zlgkqbg37lee3tyxmwiit3ph",
+  "handle": "isilme.reverie.house",
+  "displayName": "Isilmë",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zlgkqbg37lee3tyxmwiit3ph/bafkreig2nggy5zxfw5yaaijmhyfti5y5lglqols4zcqiw6rm5ct75gmjje"
+ },
+ {
+  "did": "did:plc:6ayddqghxhciedbaofoxkcbs",
+  "handle": "tynanpurdy.com",
+  "displayName": "Tynan Purdy ⁂",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6ayddqghxhciedbaofoxkcbs/bafkreiglthbq4gs7jrllwoxzskvnw2mlwtvygek3kqx2ojahu63wzli65e"
+ },
+ {
+  "did": "did:plc:fyxup3moaom35xzxnomsryyx",
+  "handle": "bradwenner.photo",
+  "displayName": "Brad Wenner",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:fyxup3moaom35xzxnomsryyx/bafkreigzstdsur4pkjlzb4bgkigy6jt2hud3xx5ivgzkbkfdlazigqmsli"
+ },
+ {
+  "did": "did:plc:oio4hkxaop4ao4wz2pp3f4cr",
+  "handle": "mackuba.eu",
+  "displayName": "Kuba Suder 🇵🇱🇺🇦",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:oio4hkxaop4ao4wz2pp3f4cr/bafkreidcvmjwmk24rfnmdwgcnwx7i746revfkvvmtknemrr3uc4pjqmbgu"
+ },
+ {
+  "did": "did:plc:tas6hj2xjrqben5653v5kohk",
+  "handle": "matt.evil.gay",
+  "displayName": "matt",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tas6hj2xjrqben5653v5kohk/bafkreidnkerc46vk253ijglst4itqmvzq2woy2ttt4kmzid7kwri2a6o7y"
+ },
+ {
+  "did": "did:plc:tk4nmnzqn4mhdj2w7t6qg3oo",
+  "handle": "deamplified.com",
+  "displayName": "sean",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tk4nmnzqn4mhdj2w7t6qg3oo/bafkreiah6ep6bbrzoquw2cmq2yvna7plfpncnfalcsp4flrmjmmerukism"
+ },
+ {
+  "did": "did:plc:ugddtlhj5a6auwqrxwrecw4s",
+  "handle": "j4nk.dev",
+  "displayName": "Julian",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ugddtlhj5a6auwqrxwrecw4s/bafkreibyhsjjbeu7qc6f5nskdk7d5vini7vkxliac5lb2etxqwlw4t7f7e"
+ },
+ {
+  "did": "did:plc:xvzzrfy23bkutm5ie5gelvr4",
+  "handle": "grishalr.protoimsg.app",
+  "displayName": "resident atlien he/him",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xvzzrfy23bkutm5ie5gelvr4/bafkreigwigiubmx65sidnypudi4hxrxxqgy6xr6d5gxzqpgqi65m7tpruy"
+ },
+ {
+  "did": "did:plc:vlblikmsgpx2i7fvxinrsvzu",
+  "handle": "moll.dev",
+  "displayName": "Tom",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vlblikmsgpx2i7fvxinrsvzu/bafkreiav4pabafng653wpcphzlmu3mai54nz2ycu6vrdd23oawwjgljrru"
+ },
+ {
+  "did": "did:plc:qy5pluw2bsuq2x6albsgkvx3",
+  "handle": "samclemente.me",
+  "displayName": "Sam Clemente",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qy5pluw2bsuq2x6albsgkvx3/bafkreifansvuu7ize46g3fipwjqtfnaua6buhvrdg73auwtnw2wagoyri4"
+ },
+ {
+  "did": "did:plc:stznz7qsokto2345qtdzogjb",
+  "handle": "psingletary.com",
+  "displayName": "Patrick Singletary",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:stznz7qsokto2345qtdzogjb/bafkreiabzh4azd4qaorz5kfzlwy33qwl243apiw74b7ysucebarac5wxtm"
+ },
+ {
+  "did": "did:plc:qed67d2sst5xqsbuveiv7fjp",
+  "handle": "joebasser.com",
+  "displayName": "Joe Basser",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qed67d2sst5xqsbuveiv7fjp/bafkreigg3h5agoerxvyrqnon7lnf5d52jcv7dkskqy4h6qtr6kosjt7exi"
+ },
+ {
+  "did": "did:plc:4hawmtgzjx3vclfyphbhfn7v",
+  "handle": "j4ck.xyz",
+  "displayName": "jack",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4hawmtgzjx3vclfyphbhfn7v/bafkreidrcritxoxnpcusmyfsurthnaogegn5fjiu7f5jlwkey3s5nirldq"
+ },
+ {
+  "did": "did:plc:eob75vcjtmbaef2tn4evc4sl",
+  "handle": "aka.dad",
+  "displayName": "dad (aka miguel)",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:eob75vcjtmbaef2tn4evc4sl/bafkreid6wkkeukwfkwhbyd5iytqidq33yidt3wnn2ljsqto3aeqof2woqu"
+ },
+ {
+  "did": "did:plc:v46ojbiop5ebs5h7gaomixcc",
+  "handle": "brookie.blog",
+  "displayName": "Brookie",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:v46ojbiop5ebs5h7gaomixcc/bafkreiddfj75kvy5nkspl4zfopst4bdtjhk7swvg5vjjn3qoyjyek7vchq"
+ },
+ {
+  "did": "did:plc:4hodhjl2kposuchzvpiviwps",
+  "handle": "brittanyellich.com",
+  "displayName": "Brittany Ellich",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4hodhjl2kposuchzvpiviwps/bafkreigbx3ezxpolmcvdcfbrvtgwg62ygvuemxniliyga7b4j6qreurybi"
+ },
+ {
+  "did": "did:plc:2cxgdrgtsmrbqnjkwyplmp43",
+  "handle": "bmann.ca",
+  "displayName": "Boris",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2cxgdrgtsmrbqnjkwyplmp43/bafkreiaq7kk6kl7fqqskgan56jldqphvumxrlfviqbhx2rxcgmgtyc7iri"
+ },
+ {
+  "did": "did:plc:6i6n57nrkq6xavqbdo6bvkqr",
+  "handle": "byarielm.fyi",
+  "displayName": "Ariel M.",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6i6n57nrkq6xavqbdo6bvkqr/bafkreiguojqvkrgy4c7w72wfgn7nulhwz5qaks5bh25xblmdqw42s62mve"
+ },
+ {
+  "did": "did:plc:i7vd7szhlklkky6zsw6kqshn",
+  "handle": "aiueo.ooo",
+  "displayName": "あ",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:i7vd7szhlklkky6zsw6kqshn/bafkreigryaijdnbpjqv376u6hnxiz2jtvz5ud76x3fbvj75tz7xxuee7la"
+ },
+ {
+  "did": "did:plc:lrphxvv25aibthe7xoc2eeyy",
+  "handle": "kandake.africa",
+  "displayName": "Evelyn",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lrphxvv25aibthe7xoc2eeyy/bafkreigqje4magyyqibendqfyaoohtc6mrjwzviiyg3bwovjeragalbsqm"
+ },
+ {
+  "did": "did:plc:ygxc7x6f7u3smp3j4m67duvy",
+  "handle": "spotchi.eurosky.social",
+  "displayName": "Quentin",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ygxc7x6f7u3smp3j4m67duvy/bafkreigqzyvvqniazjrwsa64tfh6uux32aposdizopfnt2u2meq6swqmiu"
+ },
+ {
+  "did": "did:plc:bgiuklsedj6jytu5w5stv7cn",
+  "handle": "remysharp.com",
+  "displayName": "rem / Remy Sharp ",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bgiuklsedj6jytu5w5stv7cn/bafkreifdnzfv67uzr7tq3t4eokccv6444yqz7mkbkps54vwmfd3ldxby5m"
+ },
+ {
+  "did": "did:plc:rnpkyqnmsw4ipey6eotbdnnf",
+  "handle": "pds.dad",
+  "displayName": "Bailey Townsend 🦀",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:rnpkyqnmsw4ipey6eotbdnnf/bafkreierosmj3aqp63zskykqo7ucl6vs4adep5op27tzkr6zhoxdaqjvjy"
+ },
+ {
+  "did": "did:plc:6cbrxnrfmwpb7rhjkihqezzh",
+  "handle": "caesar.dev",
+  "displayName": "Caesar",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6cbrxnrfmwpb7rhjkihqezzh/bafkreicbqmzkwpbxk3umbwst3eu2kiywwniy3w2v25l4af66znjmsrduaq"
+ },
+ {
+  "did": "did:plc:tbr4cunn6r4hox73ybzjfwt3",
+  "handle": "hilarybaumann.com",
+  "displayName": "Hilary Baumann 💻 🥃",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tbr4cunn6r4hox73ybzjfwt3/bafkreib7i4jlffirttidazuav3f5cg47s4ld4i5wrh65t6y4ev2iduea7u"
+ },
+ {
+  "did": "did:plc:2pkidgvfnbxx7sq3shporxij",
+  "handle": "dxlliv.bsky.social",
+  "displayName": "dxlliv",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2pkidgvfnbxx7sq3shporxij/bafkreieaxbxm7psq4wwgdd3wdfxwtopk2erd26vpd4xhuvhirlcdlk4yiq"
+ },
+ {
+  "did": "did:plc:5ekiam2ybpgrbmpbhylb7ama",
+  "handle": "julietshen.online",
+  "displayName": "Juliet Shen",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:5ekiam2ybpgrbmpbhylb7ama/bafkreigceuknxts4q3brsxkpuowbpd7kytyjf4z7johbk73mp6f7a5arsi"
+ },
+ {
+  "did": "did:plc:zntngpowgd6rorjt3haywj36",
+  "handle": "aly.codes",
+  "displayName": "aly",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zntngpowgd6rorjt3haywj36/bafkreiew6hrr5o7ezjmyq6drdhvuk7kggxqforl7yp3pxh5gzvmge5k36y"
+ },
+ {
+  "did": "did:plc:hsqwcidfez66lwm3gxhfv5in",
+  "handle": "goose.art",
+  "displayName": "business goose🪿",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hsqwcidfez66lwm3gxhfv5in/bafkreihz5isv2g6klkwminz5gftirdnfycjzkogaqpxbihkvhzddj6tqfy"
+ },
+ {
+  "did": "did:plc:xbtmt2zjwlrfegqvch7fboei",
+  "handle": "zzstoatzz.io",
+  "displayName": "nate",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xbtmt2zjwlrfegqvch7fboei/bafkreiegehiwbazkkpp5nucenajtdjwinxrrnz7ukawpqnudbr47f44zhq"
+ },
+ {
+  "did": "did:plc:bcgltzqazw5tb6k2g3ttenbj",
+  "handle": "chadtmiller.com",
+  "displayName": "Chad",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bcgltzqazw5tb6k2g3ttenbj/bafkreig5bcb7dl7aphw6eg4e7kjkvpdshfexdvk7jldg53ypre6ecdhesu"
+ },
+ {
+  "did": "did:plc:ukp7pzzht32uigg6bg4vxr5t",
+  "handle": "awarm.space",
+  "displayName": "jared",
+  "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukp7pzzht32uigg6bg4vxr5t/bafkreihzgolcsvd4ddbmxamikuqjv27ns4i2ahacrlcgs35sfnoeqjciqy"
+ }
+]
