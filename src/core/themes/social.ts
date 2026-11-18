@@ -153,12 +153,7 @@ export async function buildFollowing(
 
   const ordered = roundRobin([...firstByDid.values()], MAX_ATTEMPTS);
   const dids = ordered.map((c) => followSubject(c.nsid, c.rec)!);
-  let profiles: Awaited<ReturnType<AtSource['getProfiles']>> = [];
-  try {
-    profiles = await source.getProfiles(dids);
-  } catch {
-    profiles = [];
-  }
+  const profiles = await source.getProfiles(dids).catch(() => []);
   const profileByDid = new Map(profiles.map((p) => [p.did, p]));
 
   const highlights = ordered
