@@ -1,51 +1,27 @@
 import React from 'react';
+import { BlockInteractions } from '@/app/components/BlockInteractions/BlockInteractions';
+import { BlockListening } from '@/app/components/BlockListening/BlockListening';
 import { CardNowBook } from '@/app/components/CardNowBook/CardNowBook';
 import { CardNowEvent } from '@/app/components/CardNowEvent/CardNowEvent';
+import { CardNowGallery } from '@/app/components/CardNowGallery/CardNowGallery';
 import { CardNowPosition } from '@/app/components/CardNowPosition/CardNowPosition';
+import { CardNowPost } from '@/app/components/CardNowPost/CardNowPost';
+import { CardNowSaved } from '@/app/components/CardNowSaved/CardNowSaved';
+import { CardNowTrack } from '@/app/components/CardNowTrack/CardNowTrack';
 import { CardNowWriting } from '@/app/components/CardNowWriting/CardNowWriting';
-import { ItemRow } from '@/app/components/ItemRow/ItemRow';
+import { RowNowRepo } from '@/app/components/RowNowRepo/RowNowRepo';
 import { ThemeSection } from '@/app/components/ThemeSection/ThemeSection';
 import { THEME_TITLES } from '@/app/components/ThemeSection/ThemeSection.constants';
-import type { ItemBase, Theme } from '@/core/types';
-import { bookGrid, cardList, list } from './ThemeRenderer.styles';
+import type { Theme } from '@/core/types';
+import { postingSummary } from './ThemeRenderer.constants';
+import * as styles from './ThemeRenderer.styles';
 import type { ThemeRendererProps } from './ThemeRenderer.types';
-
-type Row = ItemBase & { label: string };
-
-function rowsOf(theme: Theme): Row[] {
-  switch (theme.id) {
-    case 'working':
-      return theme.items.map((i) => ({ ...i, label: i.title }));
-    case 'going':
-      return theme.items.map((i) => ({ ...i, label: i.name }));
-    case 'writing':
-    case 'reading':
-      return theme.items.map((i) => ({ ...i, label: i.title }));
-    case 'making':
-      return [
-        ...theme.repos.map((i) => ({ ...i, label: i.name })),
-        ...theme.tracks.map((i) => ({ ...i, label: i.title })),
-      ];
-    case 'photographing':
-      return theme.galleries.map((i) => ({ ...i, label: i.title }));
-    case 'listening':
-      return theme.lastPlayed ? [{ ...theme.lastPlayed, label: theme.lastPlayed.track }] : [];
-    case 'posting':
-      return theme.items.map((i) => ({ ...i, label: i.text }));
-    case 'saving':
-      return theme.items.map((i) => ({ ...i, label: i.title }));
-    case 'social':
-      return [theme.following, theme.subscribed, theme.appreciated].flatMap(
-        (block) => block?.highlights ?? []
-      );
-  }
-}
 
 function body(theme: Theme, now: Date): React.ReactNode {
   switch (theme.id) {
     case 'working':
       return (
-        <ul className={cardList}>
+        <ul className={styles.cardList}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowPosition item={item} now={now} />
@@ -55,7 +31,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
       );
     case 'going':
       return (
-        <ul className={cardList}>
+        <ul className={styles.cardList}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowEvent item={item} now={now} />
@@ -65,7 +41,7 @@ function body(theme: Theme, now: Date): React.ReactNode {
       );
     case 'writing':
       return (
-        <ul className={cardList}>
+        <ul className={styles.cardList}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowWriting item={item} now={now} />
@@ -73,9 +49,48 @@ function body(theme: Theme, now: Date): React.ReactNode {
           ))}
         </ul>
       );
+    case 'making':
+      return (
+        <div className={styles.subBlocks}>
+          {theme.tracks.length > 0 && (
+            <div className={styles.subBlock}>
+              <p className={styles.subtitle}>Music</p>
+              <ul className={styles.mediaGrid}>
+                {theme.tracks.map((item) => (
+                  <li key={item.key}>
+                    <CardNowTrack item={item} now={now} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {theme.repos.length > 0 && (
+            <div className={styles.subBlock}>
+              <p className={styles.subtitle}>Code</p>
+              <ul className={styles.rowList}>
+                {theme.repos.map((item) => (
+                  <li key={item.key}>
+                    <RowNowRepo item={item} now={now} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      );
+    case 'photographing':
+      return (
+        <ul className={styles.galleryList}>
+          {theme.galleries.map((item) => (
+            <li key={item.key}>
+              <CardNowGallery item={item} now={now} />
+            </li>
+          ))}
+        </ul>
+      );
     case 'reading':
       return (
-        <ul className={bookGrid}>
+        <ul className={styles.mediaGrid}>
           {theme.items.map((item) => (
             <li key={item.key}>
               <CardNowBook item={item} now={now} />
@@ -83,22 +98,64 @@ function body(theme: Theme, now: Date): React.ReactNode {
           ))}
         </ul>
       );
-    default:
+    case 'listening':
+      return <BlockListening theme={theme} now={now} />;
+    case 'posting':
       return (
-        <ul className={list}>
-          {rowsOf(theme).map((row) => (
-            <li key={row.key}>
-              <ItemRow label={row.label} href={row.href} at={row.at} app={row.app} now={now} />
+        <ul className={styles.cardList}>
+          {theme.items.map((item) => (
+            <li key={item.key}>
+              <CardNowPost item={item} now={now} />
             </li>
           ))}
         </ul>
+      );
+    case 'saving':
+      return (
+        <ul className={styles.rowList}>
+          {theme.items.map((item) => (
+            <li key={item.key}>
+              <CardNowSaved item={item} now={now} />
+            </li>
+          ))}
+        </ul>
+      );
+    case 'social':
+      return (
+        <div className={styles.subBlocks}>
+          {theme.following && (
+            <BlockInteractions title="Following" verb="Followed" noun="people" block={theme.following} now={now} />
+          )}
+          {theme.subscribed && (
+            <BlockInteractions
+              title="Subscribed"
+              verb="Subscribed to"
+              noun="publications"
+              block={theme.subscribed}
+              now={now}
+            />
+          )}
+          {theme.appreciated && (
+            <BlockInteractions
+              title="Appreciated"
+              verb="Appreciated"
+              noun="things"
+              block={theme.appreciated}
+              now={now}
+            />
+          )}
+        </div>
       );
   }
 }
 
 /** Renders one theme as a titled section. */
 export const ThemeRenderer: React.FC<ThemeRendererProps> = ({ theme, now }) => (
-  <ThemeSection id={theme.id} title={THEME_TITLES[theme.id]}>
+  <ThemeSection
+    id={theme.id}
+    title={THEME_TITLES[theme.id]}
+    summary={theme.id === 'posting' ? postingSummary(theme.weekCount, theme.weekReplies) : undefined}
+  >
     {body(theme, now)}
   </ThemeSection>
 );
