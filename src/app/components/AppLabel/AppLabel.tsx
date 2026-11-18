@@ -4,10 +4,10 @@ import { label } from './AppLabel.styles';
 import type { AppLabelProps } from './AppLabel.types';
 
 /** The source app's name, linking to the app. */
-export const AppLabel: React.FC<AppLabelProps> = ({ app, tone = 'onLight' }) => {
+export const AppLabel: React.FC<AppLabelProps> = ({ app }) => {
   const ref = APPS[app];
   return (
-    <a href={ref.url} className={label[tone]} target="_blank" rel="noopener noreferrer">
+    <a href={ref.url} className={label} target="_blank" rel="noopener noreferrer">
       {ref.name}
     </a>
   );

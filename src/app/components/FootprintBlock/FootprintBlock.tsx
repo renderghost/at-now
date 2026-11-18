@@ -11,7 +11,7 @@ export const FootprintBlock: React.FC<FootprintBlockProps> = ({ footprint }) => 
       {TITLE}
     </h2>
     <p className={styles.text}>
-      {sentence(footprint.collections, footprint.apps.length)}
+      {sentence(footprint.collections, footprint.apps.length, footprint.pdsHost)}
     </p>
     <ul className={styles.list}>
       {footprint.apps.map((app) => (

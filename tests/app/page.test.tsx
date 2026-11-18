@@ -46,6 +46,8 @@ describe('Now page', () => {
       'Posting',
       'Saving',
       'Social',
+      'At a glance',
+      'Elsewhere',
       'Made from my PDS',
     ]);
   });
@@ -70,7 +72,9 @@ describe('Now page', () => {
     render(<App now={NOW} />);
     const footprint = await screen.findByRole('region', { name: 'Made from my PDS' });
     expect(
-      within(footprint).getByText('Built live from 34 collections across 16 apps:')
+      within(footprint).getByText(
+        'Built live from 34 collections across 16 apps, hosted on eurosky.social:'
+      )
     ).toBeTruthy();
     expect(within(footprint).getAllByRole('link')).toHaveLength(16);
   });

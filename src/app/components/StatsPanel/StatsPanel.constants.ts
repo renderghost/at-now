@@ -1,5 +1,5 @@
 import { formatDate } from '@/core/time';
-import type { NowPayload, NowProfile, NowStats } from '@/core/types';
+import type { NowProfile, NowStats } from '@/core/types';
 import type { Stat, StatGroup } from './StatsPanel.types';
 
 export const TITLE = 'At a glance';
@@ -14,12 +14,8 @@ const count = (n: number, one: string, many: string, capped = false): Stat | nul
 const present = (stats: (Stat | null)[]): Stat[] =>
   stats.filter((s): s is Stat => s !== null);
 
-/** The four header stat groups; zero values and empty groups are dropped. */
-export function statGroups(
-  stats: NowStats,
-  profile: NowProfile | null,
-  footprint: NowPayload['footprint']
-): StatGroup[] {
+/** Stat groups; zero values and empty groups are dropped. */
+export function statGroups(stats: NowStats, profile: NowProfile | null): StatGroup[] {
   const counts = profile?.counts;
   const joined = counts?.joinedAt ? new Date(counts.joinedAt) : null;
 
@@ -55,14 +51,6 @@ export function statGroups(
         joined && !Number.isNaN(joined.getTime())
           ? { value: formatDate(joined, 'month'), label: 'on the ATmosphere since' }
           : null,
-      ]),
-    },
-    {
-      title: 'Footprint',
-      stats: present([
-        count(footprint.collections, 'collection', 'collections'),
-        count(footprint.apps.length, 'app', 'apps'),
-        { value: footprint.pdsHost, label: 'hosts my data', wide: true },
       ]),
     },
   ];
