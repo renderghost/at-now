@@ -6,8 +6,13 @@ import type { LinkProps } from './Link.types';
 /** renderg.host and its subdomains open in the same tab. */
 function isOffSite(href: string): boolean {
   if (!/^https?:\/\//.test(href)) return false;
-  const host = new URL(href).hostname;
-  return host !== SAME_SITE_HOST && !host.endsWith(`.${SAME_SITE_HOST}`);
+  try {
+    const host = new URL(href).hostname;
+    return host !== SAME_SITE_HOST && !host.endsWith(`.${SAME_SITE_HOST}`);
+  } catch {
+    // Malformed URLs from remote records still render; treat as off-site.
+    return true;
+  }
 }
 
 export const Link: React.FC<LinkProps> = ({

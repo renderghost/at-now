@@ -8,7 +8,7 @@ import type {
 } from '../lexicons.js';
 import { avatarUrl, bannerUrl, cdnImageUrl, profileUrl } from '../links.js';
 import type { NowProfile, ProfileCounts } from '../types.js';
-import { joinParts } from './util.js';
+import { hostOf, joinParts } from './util.js';
 
 /** "he/him" from Near Horizon's pronoun sets. */
 function pronounsOf(records: AtRecord<PronounsRecord>[]): string | undefined {
@@ -63,7 +63,7 @@ export function selectProfile(
     links: ordered
       .filter((l) => l.value.url)
       .map((l) => ({
-        title: l.value.title || new URL(l.value.url).host,
+        title: l.value.title || hostOf(l.value.url) || l.value.url,
         url: l.value.url,
         ...(l.value.icon
           ? { iconUrl: cdnImageUrl(IDENTITY.did, l.value.icon.ref.$link) }

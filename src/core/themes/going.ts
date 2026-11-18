@@ -33,20 +33,20 @@ export function selectGoing(
 ): EventItem[] {
   const items: (EventItem & { sortAt: number })[] = [];
 
-  for (const rsvp of rsvps) {
+  const toItem = (rsvp: AtRecord<RsvpRecord>): (EventItem & { sortAt: number }) | null => {
     const status = tokenOf(rsvp.value.status);
-    if (status !== 'going' && status !== 'interested') continue;
+    if (status !== 'going' && status !== 'interested') return null;
     const uri = rsvp.value.subject?.uri;
     const event = uri ? events.get(uri) : undefined;
-    if (!uri || !event) continue;
-    if (tokenOf(event.status) === 'cancelled') continue;
+    if (!uri || !event) return null;
+    if (tokenOf(event.status) === 'cancelled') return null;
 
     const starts = parseDate(event.startsAt);
     const ends = parseDate(event.endsAt) ?? starts;
-    if (!starts || !ends) continue;
+    if (!starts || !ends) return null;
 
     const past = ends.getTime() < now.getTime();
-    if (past && now.getTime() - ends.getTime() > WINDOW_DAYS * DAY) continue;
+    if (past && now.getTime() - ends.getTime() > WINDOW_DAYS * DAY) return null;
 
     const parts = parseAtUri(uri);
     const mode = tokenOf(event.mode);
@@ -55,7 +55,7 @@ export function selectGoing(
       event.media?.find((m) => m.role === 'thumbnail') ??
       event.media?.find((m) => m.role === 'header');
 
-    items.push({
+    return {
       key: rsvp.uri,
       at: starts.toISOString(),
       app: 'smokesignal',
@@ -68,11 +68,21 @@ export function selectGoing(
       rsvp: status,
       past,
       imageUrl:
-        image?.content && parts
+        image?.content?.ref?.$link && parts
           ? cdnImageUrl(parts.did, image.content.ref.$link)
           : undefined,
       sortAt: starts.getTime(),
-    });
+    };
+  };
+
+  // One odd remote record must not take the others down with it.
+  for (const rsvp of rsvps) {
+    try {
+      const item = toItem(rsvp);
+      if (item) items.push(item);
+    } catch {
+      // Unusable event record: skip it.
+    }
   }
 
   const upcoming = items

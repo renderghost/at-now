@@ -16,7 +16,8 @@ export type Freshness = 'now' | 'recently';
  * Returns null for anything else.
  */
 export function parseDate(input: string | undefined | null): Date | null {
-  if (!input) return null;
+  // Remote records are unvalidated: anything but a string is unusable.
+  if (typeof input !== 'string' || !input) return null;
   const value = input.trim();
 
   const partial = /^(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?$/.exec(value);
@@ -104,11 +105,16 @@ export function relativeTime(at: Date, now: Date): string {
   return 'just now';
 }
 
-/** "18 Nov 2026" (day) or "Nov 2026" (month), in British English. */
+/**
+ * "18 Nov 2026" (day) or "Nov 2026" (month), in British English. Month
+ * precision is read in UTC: month-only values ("2026-11") are stored as the
+ * 1st at 00:00Z, which is still October west of Greenwich.
+ */
 export function formatDate(at: Date, precision: 'day' | 'month' = 'day'): string {
   return new Intl.DateTimeFormat('en-GB', {
     day: precision === 'day' ? 'numeric' : undefined,
     month: 'short',
     year: 'numeric',
+    timeZone: precision === 'month' ? 'UTC' : undefined,
   }).format(at);
 }

@@ -12,6 +12,15 @@ export const didOf = (uri: string): string => uri.split('/')[2] ?? '';
 export const newestFirst = <T>(items: T[], dateOf: (item: T) => Date): T[] =>
   [...items].sort((a, b) => dateOf(b).getTime() - dateOf(a).getTime());
 
+/** A URL's host, or undefined when the URL doesn't parse. */
+export const hostOf = (url: string): string | undefined => {
+  try {
+    return new URL(url).host;
+  } catch {
+    return undefined;
+  }
+};
+
 /** Joins non-empty, non-repeated parts. */
 export const joinParts = (parts: (string | undefined)[], sep = ', '): string | undefined => {
   const kept = parts.filter((p): p is string => Boolean(p && p.trim()));
