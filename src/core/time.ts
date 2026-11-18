@@ -56,14 +56,9 @@ export function dateToTid(date: Date): string {
 }
 
 /** A record's date: its createdAt, else the timestamp in its TID key. */
-export function recordDate(rec: {
-  uri: string;
-  value: { createdAt?: unknown };
-}): Date | null {
-  const created =
-    typeof rec.value.createdAt === 'string'
-      ? parseDate(rec.value.createdAt)
-      : null;
+export function recordDate(rec: { uri: string; value: object }): Date | null {
+  const raw = (rec.value as { createdAt?: unknown }).createdAt;
+  const created = typeof raw === 'string' ? parseDate(raw) : null;
   if (created) return created;
   const rkey = rec.uri.split('/').pop() ?? '';
   return tidToDate(rkey);
