@@ -47,12 +47,22 @@ describe('selectStatus', () => {
     ).toBeNull();
   });
 
-  it('leaves custom emoji to the status app', () => {
+  it('resolves custom emoji to the status app image', () => {
     const item = selectStatus(
       withValue({ ...recorded.value, expires: '2026-11-19T00:00:00Z' }),
       NOW
     );
     expect(item?.emoji).toBeUndefined();
+    expect(item?.emojiUrl).toBe('https://find-bufo.com/e/bufo-blush.png');
+  });
+
+  it('keeps plain emoji as text', () => {
+    const item = selectStatus(
+      withValue({ ...recorded.value, emoji: '🎧', expires: '2026-11-19T00:00:00Z' }),
+      NOW
+    );
+    expect(item?.emoji).toBe('🎧');
+    expect(item?.emojiUrl).toBeUndefined();
   });
 });
 
@@ -69,12 +79,13 @@ describe('selectWorking', () => {
       'Barry Prendergast',
     ]);
     expect(items[0].at).toBe('2026-11-01T00:00:00.000Z');
+    expect(items[0].href).toBe('https://sifa.id/p/renderg.host');
     expect(freshnessOf(new Date(items[0].at), NOW)).toBe('recently');
   });
 
   it('formats location and workplace type', () => {
     const [first] = selectWorking(records, NOW);
-    expect(first.location).toBe('Berlin, State of Berlin, DE');
+    expect(first.location).toBe('Berlin, DE');
     expect(first.workplaceType).toBe('remote');
     expect(first.employmentType).toBe('contract');
   });

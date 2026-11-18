@@ -1,4 +1,4 @@
-export const card = 'flex flex-col md:flex-row gap-24 items-start p-32 w-full bg-white';
+export const card = 'flex flex-col md:flex-row gap-24 items-start p-24 sm:p-32 w-full bg-white';
 
 export const cover = 'w-full md:w-[200px] aspect-video object-cover shrink-0 bg-black-06';
 

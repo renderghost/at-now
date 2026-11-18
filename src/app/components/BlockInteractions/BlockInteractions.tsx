@@ -1,6 +1,7 @@
 import React from 'react';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import { Link } from '@/app/components/Link/Link';
+import { NowImage } from '@/app/components/NowImage/NowImage';
 import { APPS } from '@/core/config';
 import * as styles from './BlockInteractions.styles';
 import type { BlockInteractionsProps } from './BlockInteractions.types';
@@ -30,7 +31,7 @@ export const BlockInteractions: React.FC<BlockInteractionsProps> = ({
       <ul className={styles.list}>
         {block.highlights.map((h) => (
           <li key={h.key} className={styles.highlight}>
-            {h.avatar && <img src={h.avatar} alt="" className={styles.avatar} loading="lazy" />}
+            <NowImage src={h.avatar} alt="" className={styles.avatar} />
             <div className={styles.body}>
               {h.href ? (
                 <Link href={h.href} label={h.label} color="black" wrap />

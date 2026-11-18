@@ -1,7 +1,7 @@
 import type { AtRecord } from '../atproto/types.js';
 import { IDENTITY, LIMIT } from '../config.js';
 import type { PlyrTrack, TangledRepo } from '../lexicons.js';
-import { appUrl, repoUrl } from '../links.js';
+import { plyrArtistUrl, repoUrl } from '../links.js';
 import { isWithinWindow, parseDate } from '../time.js';
 import type { RepoItem, TrackItem } from '../types.js';
 
@@ -36,7 +36,7 @@ export function selectMaking(
       key: rec.uri,
       at: at.toISOString(),
       app: 'plyr',
-      href: appUrl('plyr'),
+      href: plyrArtistUrl(IDENTITY.handle),
       title: rec.value.title,
       artist: rec.value.artist,
       album: rec.value.album || undefined,

@@ -1,6 +1,7 @@
 import type { AtRecord } from '../atproto/types.js';
-import { LIMIT } from '../config.js';
+import { IDENTITY, LIMIT } from '../config.js';
 import type { PositionRecord } from '../lexicons.js';
+import { sifaProfileUrl } from '../links.js';
 import { parseDate } from '../time.js';
 import type { PositionItem } from '../types.js';
 import { joinParts, tokenOf } from './util.js';
@@ -30,9 +31,10 @@ export function selectWorking(
         key: rec.uri,
         at: started.toISOString(),
         app: 'sifa',
+        href: sifaProfileUrl(IDENTITY.handle),
         title: value.title,
         company: value.company,
-        location: loc ? joinParts([loc.locality, loc.region, loc.country]) : undefined,
+        location: loc ? joinParts([loc.locality ?? loc.region, loc.country]) : undefined,
         workplaceType: tokenOf(value.workplaceType),
         employmentType: tokenOf(value.employmentType),
         startedAt: started.toISOString(),

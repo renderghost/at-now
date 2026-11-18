@@ -1,6 +1,7 @@
 import React from 'react';
 import { ItemMeta } from '@/app/components/ItemMeta/ItemMeta';
 import { Link } from '@/app/components/Link/Link';
+import { NowImage } from '@/app/components/NowImage/NowImage';
 import { formatDate } from '@/core/time';
 import { MODE_LABELS, RSVP_LABELS } from './CardNowEvent.constants';
 import * as styles from './CardNowEvent.styles';
@@ -28,9 +29,7 @@ export const CardNowEvent: React.FC<CardNowEventProps> = ({ item, now }) => {
 
   return (
     <article className={styles.card}>
-      {item.imageUrl && (
-        <img src={item.imageUrl} alt="" className={styles.image} loading="lazy" />
-      )}
+      {item.imageUrl && <NowImage src={item.imageUrl} alt="" className={styles.image} />}
       <div className={styles.body}>
         <div className={styles.titleRow}>
           <h3 className={styles.title}>

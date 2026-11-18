@@ -1,4 +1,4 @@
-export const card = 'flex flex-col gap-16 items-start p-32 w-full bg-white';
+export const card = 'flex flex-col gap-16 items-start p-24 sm:p-32 w-full bg-white';
 
 export const text =
   'font-sans font-medium text-base leading-[28px] text-black whitespace-pre-line break-words line-clamp-6';

@@ -1,7 +1,7 @@
 import { APPS, CDN_URL } from './config.js';
 import type { AppId } from './types.js';
 
-/** Web links into each app. Patterns verified against the live apps. */
+/** Web links into each app. Every pattern was verified against the live app. */
 
 export const appUrl = (app: AppId): string => APPS[app].url;
 
@@ -25,6 +25,16 @@ export const eventUrl = (did: string, rkey: string): string =>
 
 export const statusUrl = (handle: string): string =>
   `https://status.zzstoatzz.io/@${handle}`;
+
+/** The custom emoji image the status app renders for "custom:<name>". */
+export const statusEmojiUrl = (name: string): string =>
+  `https://find-bufo.com/e/${encodeURIComponent(name)}.png`;
+
+export const plyrArtistUrl = (handle: string): string =>
+  `https://plyr.fm/u/${handle}`;
+
+export const sifaProfileUrl = (handle: string): string =>
+  `https://sifa.id/p/${handle}`;
 
 /** Splits an at-uri into its repo DID, collection and record key. */
 export function parseAtUri(

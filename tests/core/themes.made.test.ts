@@ -82,6 +82,7 @@ describe('selectMaking', () => {
       title: 'ǔuvvǔulluǔ',
       artist: 'gggiiirrrlllsss',
       app: 'plyr',
+      href: 'https://plyr.fm/u/renderg.host',
     });
   });
 });
