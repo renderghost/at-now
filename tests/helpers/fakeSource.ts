@@ -67,6 +67,17 @@ export function createFakeSource(opts: FakeSourceOptions = {}): AtSource {
       const known = readFixture<PostView[]>('posts.json');
       return known.filter((p) => uris.includes(p.uri));
     },
+    async getPlyrTracks() {
+      const res = readFixture<{
+        tracks: { id: number; atproto_record_uri: string; artist_handle: string; album: { slug: string } | null }[];
+      }>('plyr-tracks.json');
+      return res.tracks.map((t) => ({
+        id: t.id,
+        uri: t.atproto_record_uri,
+        artistHandle: t.artist_handle,
+        ...(t.album?.slug ? { albumSlug: t.album.slug } : {}),
+      }));
+    },
     async getProfile() {
       const p = readFixture<{
         followersCount: number;

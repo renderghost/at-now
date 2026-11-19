@@ -18,7 +18,7 @@ describe('App shell', () => {
   it('renders the page title', () => {
     render(<App />);
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Now' })
+      screen.getByRole('heading', { level: 1, name: /Hi, I’m Barry/ })
     ).toBeTruthy();
   });
 

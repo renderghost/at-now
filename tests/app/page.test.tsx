@@ -32,20 +32,20 @@ describe('Now page', () => {
   it('renders theme sections in order', async () => {
     serve(payload);
     render(<App now={NOW} />);
-    await screen.findByRole('region', { name: 'Working' });
+    await screen.findByRole('region', { name: 'I’m working on' });
     const headings = screen
       .getAllByRole('heading', { level: 2 })
       .map((h) => h.textContent);
     expect(headings).toEqual([
-      'Working',
-      'Going',
-      'Writing',
-      'Making',
-      'Reading',
-      'Listening',
-      'Posting',
-      'Saving',
-      'Social',
+      'I’m working on',
+      'I’m going to',
+      'I’m writing',
+      'I’m making',
+      'I’m reading',
+      'I’m listening to',
+      'I’m posting',
+      'I’m saving',
+      'I’m connecting with',
       'At a glance',
       'Elsewhere',
       'About this page',
@@ -55,16 +55,8 @@ describe('Now page', () => {
   it('hides empty themes', async () => {
     serve(payload);
     render(<App now={NOW} />);
-    await screen.findByRole('region', { name: 'Working' });
-    expect(screen.queryByText('Photographing')).toBeNull();
-  });
-
-  it('marks recent items with a Now badge', async () => {
-    serve(payload);
-    render(<App now={NOW} />);
-    const posting = await screen.findByRole('region', { name: 'Posting' });
-    expect(within(posting).getAllByText('Now', { exact: true }).length).toBeGreaterThan(0);
-    expect(within(section('Reading')).queryByText('Now', { exact: true })).toBeNull();
+    await screen.findByRole('region', { name: 'I’m working on' });
+    expect(screen.queryByText('I’m photographing')).toBeNull();
   });
 
   it('renders the footprint', async () => {
@@ -82,8 +74,8 @@ describe('Now page', () => {
   it('puts every theme’s content in cards', async () => {
     serve(payload);
     render(<App now={NOW} />);
-    await screen.findByRole('region', { name: 'Working' });
-    for (const name of ['Working', 'Going', 'Writing', 'Making', 'Reading', 'Listening', 'Posting', 'Saving', 'Social', 'At a glance', 'Elsewhere']) {
+    await screen.findByRole('region', { name: 'I’m working on' });
+    for (const name of ['I’m working on', 'I’m going to', 'I’m writing', 'I’m making', 'I’m reading', 'I’m listening to', 'I’m posting', 'I’m saving', 'I’m connecting with', 'At a glance', 'Elsewhere']) {
       expect(section(name).querySelectorAll('[data-card]').length).toBeGreaterThan(0);
     }
   });
@@ -91,7 +83,7 @@ describe('Now page', () => {
   it('uses no dividers', async () => {
     serve(payload);
     const { container } = render(<App now={NOW} />);
-    await screen.findByRole('region', { name: 'Working' });
+    await screen.findByRole('region', { name: 'I’m working on' });
     const bordered = [...container.querySelectorAll('[class]')].filter((el) =>
       /(^|\s)border(-[a-z]+)?(\s|$)|border-t|border-b|divide-/.test(el.getAttribute('class') ?? '')
     );
@@ -101,7 +93,8 @@ describe('Now page', () => {
   it('renders the identity header once loaded', async () => {
     serve(payload);
     render(<App now={NOW} />);
-    expect(await screen.findByText('B. Prendergast')).toBeTruthy();
+    expect(await screen.findByRole('link', { name: '@renderg.host' })).toBeTruthy();
+    expect(screen.getByRole('img', { name: 'B. Prendergast' })).toBeTruthy();
     expect(screen.getByRole('region', { name: 'At a glance' })).toBeTruthy();
   });
 
@@ -123,7 +116,7 @@ describe('Now page', () => {
     serve({ error: 'unavailable' }, 500);
     render(<App now={NOW} />);
     const main = screen.getByRole('main');
-    expect(screen.getByRole('heading', { level: 1, name: 'Now' })).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1, name: /Hi, I’m Barry/ })).toBeTruthy();
     expect(await within(main).findByText(/I can’t fetch what I’ve been up to right now/)).toBeTruthy();
     expect(
       within(main).getByRole('link', { name: 'renderg.host' }).getAttribute('href')

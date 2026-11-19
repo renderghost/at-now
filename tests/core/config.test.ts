@@ -28,6 +28,10 @@ describe('collection registry', () => {
     }
   });
 
+  it('credits RSVPs to atmo.rsvp', () => {
+    expect(COLLECTIONS.find((c) => c.nsid === 'community.lexicon.calendar.rsvp')?.app).toBe('atmorsvp');
+  });
+
   it('maps every collection to a known app', () => {
     for (const c of COLLECTIONS) expect(APPS[c.app]).toBeDefined();
   });

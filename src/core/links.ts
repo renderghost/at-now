@@ -21,7 +21,19 @@ export const repoUrl = (handle: string, name: string): string =>
   `https://tangled.org/${handle}/${name}`;
 
 export const eventUrl = (did: string, rkey: string): string =>
-  `https://smokesignal.events/${did}/${rkey}`;
+  `https://atmo.rsvp/p/${did}/e/${rkey}`;
+
+/** Sifa has no per-role pages; the career section is the closest. */
+export const sifaCareerUrl = (handle: string): string =>
+  `https://sifa.id/p/${handle}#career`;
+
+export const sembleProfileUrl = (handle: string): string =>
+  `https://semble.so/profile/${handle}`;
+
+export const plyrTrackUrl = (id: number): string => `https://plyr.fm/track/${id}`;
+
+export const plyrAlbumUrl = (handle: string, slug: string): string =>
+  `https://plyr.fm/u/${handle}/album/${slug}`;
 
 export const statusUrl = (handle: string): string =>
   `https://status.zzstoatzz.io/@${handle}`;

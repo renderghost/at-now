@@ -32,7 +32,7 @@ import type {
 } from './lexicons.js';
 import { eventUris, selectGoing } from './themes/going.js';
 import { selectListening } from './themes/listening.js';
-import { selectMaking } from './themes/making.js';
+import { indexPlyrTracks, selectMaking } from './themes/making.js';
 import { selectPhotographing } from './themes/photographing.js';
 import { selectPosting } from './themes/posting.js';
 import { selectProfile } from './themes/profile.js';
@@ -209,7 +209,17 @@ export async function buildNow(source: AtSource, now: Date): Promise<NowPayload>
       const repos = await list<TangledRepo>('sh.tangled.repo');
       const tracks = await list<PlyrTrack>('fm.plyr.track');
       fullCounts.tracksPublished = selectMaking([], tracks, now, Infinity).tracks.length;
-      return { id: 'making', ...selectMaking(repos, tracks, now) };
+      // plyr.fm web ids for deep links; without them tracks link to the artist.
+      const refs = tracks.length
+        ? await source.getPlyrTracks(IDENTITY.did).catch((err) => {
+            report('making', err);
+            return [];
+          })
+        : [];
+      return {
+        id: 'making',
+        ...selectMaking(repos, tracks, now, undefined, indexPlyrTracks(refs)),
+      };
     }),
     theme('photographing', async () => ({
       id: 'photographing',

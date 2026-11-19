@@ -28,7 +28,7 @@ describe('app links', () => {
       'https://tangled.org/renderg.host/semble-raycast-extension'
     );
     expect(eventUrl('did:plc:3xewinw4wtimo2lqfy5fm5sw', '3mw74r4r3gsej')).toBe(
-      'https://smokesignal.events/did:plc:3xewinw4wtimo2lqfy5fm5sw/3mw74r4r3gsej'
+      'https://atmo.rsvp/p/did:plc:3xewinw4wtimo2lqfy5fm5sw/e/3mw74r4r3gsej'
     );
     expect(statusUrl('renderg.host')).toBe('https://status.zzstoatzz.io/@renderg.host');
     expect(plyrArtistUrl('renderg.host')).toBe('https://plyr.fm/u/renderg.host');

@@ -11,7 +11,7 @@ type Status = BookItem['status'];
 /**
  * "Smart dates": books being read always show (dated by when started);
  * finished books by when finished; want-to-read by when added. Abandoned
- * books are hidden.
+ * books are hidden. Newest first, whatever the status.
  */
 export function selectReading(
   records: AtRecord<BookRecord>[],
@@ -41,6 +41,7 @@ export function selectReading(
       at: at.toISOString(),
       app: 'bookhive',
       href: value.hiveId ? bookUrl(value.hiveId) : undefined,
+      serviceHref: value.hiveId ? bookUrl(value.hiveId) : undefined,
       title: value.title,
       authors: value.authors.split('\t').map((a) => a.trim()).filter(Boolean),
       status: status as Status,
@@ -52,10 +53,5 @@ export function selectReading(
     });
   }
 
-  return items
-    .sort((a, b) => {
-      const reading = Number(b.status === 'reading') - Number(a.status === 'reading');
-      return reading || Date.parse(b.at) - Date.parse(a.at);
-    })
-    .slice(0, limit);
+  return items.sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, limit);
 }

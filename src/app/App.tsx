@@ -30,7 +30,7 @@ const App: React.FC<AppProps> = ({ now }) => {
         />
       </SafeBoundary>
 
-      <main className="flex flex-col items-start w-full max-w-[1920px] px-24 pt-48 gap-56 pb-128">
+      <main className="flex flex-col items-start w-full max-w-[848px] px-24 pt-48 gap-56 pb-128">
         {state === 'loading' && <LoadingState />}
         {state === 'error' && <NowFallback />}
         {state === 'ready' &&

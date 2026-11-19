@@ -58,7 +58,7 @@ describe('selectGoing with odd remote events', () => {
       ],
     ]);
     const items = selectGoing([rsvp(good), rsvp(numeric), rsvp(legacy)], events, NOW);
-    expect(items.map((i) => i.name)).toEqual(['Good', 'Legacy image']);
-    expect(items[1].imageUrl).toBeUndefined();
+    expect(items.map((i) => i.name)).toEqual(['Legacy image', 'Good']);
+    expect(items[0].imageUrl).toBeUndefined();
   });
 });

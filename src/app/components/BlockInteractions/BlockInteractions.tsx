@@ -40,7 +40,7 @@ export const BlockInteractions: React.FC<BlockInteractionsProps> = ({
                 <p className={styles.label}>{h.label}</p>
               )}
               {h.sublabel && <p className={styles.sublabel}>{h.sublabel}</p>}
-              <ItemMeta at={h.at} app={h.app} now={now} />
+              <ItemMeta at={h.at} app={h.app} now={now} serviceHref={h.serviceHref ?? h.href} />
             </div>
           </li>
         ))}

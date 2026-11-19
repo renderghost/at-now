@@ -90,6 +90,7 @@ export function selectPosting(
       at: at.toISOString(),
       app: 'bluesky',
       href: postUrl(IDENTITY.did, rkeyOf(rec.uri)),
+      serviceHref: postUrl(IDENTITY.did, rkeyOf(rec.uri)),
       text: rec.value.text ?? '',
       ...readEmbed(rec.value.embed),
     }));

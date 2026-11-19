@@ -20,4 +20,4 @@ export const externalBody = 'flex flex-col gap-4 min-w-0';
 
 export const externalTitle = 'font-sans font-bold text-base leading-[24px] text-black line-clamp-2';
 
-export const externalHost = 'font-sans font-medium text-sm leading-[20px] text-dimgray';
+export const externalHost = 'font-sans font-medium text-base leading-[24px] text-dimgray';

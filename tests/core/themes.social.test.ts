@@ -68,6 +68,21 @@ describe('buildFollowing', () => {
     expect(block!.highlights[0].app).toBe('bluesky');
   });
 
+  it('links each highlight’s app label to the person in that app', async () => {
+    const block = await buildFollowing(groupsFor(FOLLOW_NSIDS), createFakeSource(), NOW);
+    for (const h of block!.highlights) {
+      const handle = h.sublabel!.slice(1);
+      const expected = {
+        bluesky: `https://bsky.app/profile/${handle}`,
+        sifa: `https://sifa.id/p/${handle}`,
+        tangled: `https://tangled.org/${handle}`,
+        grain: `https://grain.social/profile/${handle}`,
+      }[h.app as 'bluesky' | 'sifa' | 'tangled' | 'grain'];
+      expect(h.serviceHref).toBe(expected);
+    }
+    expect(block!.highlights.some((h) => h.app !== 'bluesky')).toBe(true);
+  });
+
   it('reads the subject of a Tangled follow from its record key', () => {
     expect(
       followSubject('org.tangled.graph.follow', {
@@ -117,6 +132,17 @@ describe('buildAppreciated', () => {
     expect(apps).not.toContain('streamplace');
     expect(block!.highlights.length).toBeLessThanOrEqual(5);
     for (const h of block!.highlights) expect(h.label.length).toBeGreaterThan(0);
+  });
+
+  it('lists highlights newest first', async () => {
+    const block = await buildAppreciated(
+      groupsFor(APPRECIATE_NSIDS),
+      createFakeSource(),
+      NOW,
+      () => {}
+    );
+    const dates = block!.highlights.map((h) => Date.parse(h.at));
+    expect(dates).toEqual([...dates].sort((a, b) => b - a));
   });
 
   it('keeps counts when a highlight lookup fails', async () => {

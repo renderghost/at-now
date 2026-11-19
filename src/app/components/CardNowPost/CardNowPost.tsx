@@ -38,7 +38,7 @@ export const CardNowPost: React.FC<CardNowPostProps> = ({ item, now }) => (
     {item.quote && <Link href={item.quote.href} label={QUOTE_LABEL} color="blue" icon="right" />}
     </div>
     <div className={styles.footer}>
-      <ItemMeta at={item.at} app={item.app} now={now} />
+      <ItemMeta at={item.at} app={item.app} now={now} serviceHref={item.serviceHref} />
       {item.href && <Link href={item.href} label="View post" color="blue" icon="right" />}
     </div>
   </Card>

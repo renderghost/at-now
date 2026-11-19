@@ -1,7 +1,6 @@
 export const wrapper = 'flex flex-col items-start gap-16 w-full';
 
-export const heading =
-  'font-sans font-semibold text-base leading-[24px] text-dimgray tracking-[1px] uppercase';
+export const heading = 'font-sans font-black text-2xl leading-[32px] text-black';
 
 export const columns = 'grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-48 w-full';
 

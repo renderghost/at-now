@@ -2,12 +2,14 @@ import { parseAtUri } from '../links.js';
 import { HttpError, createLimiter, fetchJson } from './http.js';
 import { listAllPages, listSincePages } from './paging.js';
 import type { Page } from './paging.js';
-import type { AtRecord, AtSource, PostView, Profile } from './types.js';
+import type { AtRecord, AtSource, PlyrTrackRef, PostView, Profile } from './types.js';
 
-export type { AtRecord, AtSource, ListResult, PostView, Profile } from './types.js';
+export type { AtRecord, AtSource, ListResult, PlyrTrackRef, PostView, Profile } from './types.js';
 
 export interface HttpSourceOptions {
   did: string;
+  /** plyr.fm API base; defaults to https://api.plyr.fm. */
+  plyrApiUrl?: string;
   pdsUrl: string;
   appviewUrl: string;
   plcUrl: string;
@@ -142,6 +144,29 @@ export function createHttpSource(opts: HttpSourceOptions): AtSource {
         })
       );
       return batches.flatMap((b) => b.profiles.map(toProfile));
+    },
+
+    async getPlyrTracks(artistDid: string) {
+      const params = new URLSearchParams({ artist_did: artistDid, limit: '100' });
+      const base = opts.plyrApiUrl ?? 'https://api.plyr.fm';
+      const res = await get<{
+        tracks?: {
+          id: number;
+          atproto_record_uri?: string;
+          artist_handle?: string;
+          album?: { slug?: string } | null;
+        }[];
+      }>(`${base}/tracks/?${params}`);
+      return (res.tracks ?? [])
+        .filter((t) => typeof t.id === 'number' && t.atproto_record_uri)
+        .map(
+          (t): PlyrTrackRef => ({
+            id: t.id,
+            uri: t.atproto_record_uri!,
+            artistHandle: t.artist_handle ?? '',
+            ...(t.album?.slug ? { albumSlug: t.album.slug } : {}),
+          })
+        );
     },
 
     async getProfile(actor: string) {

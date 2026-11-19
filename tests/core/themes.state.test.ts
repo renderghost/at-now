@@ -116,7 +116,7 @@ describe('selectGoing', () => {
       'AtmosphereConf 2027',
       'The Launch of the European Social Association',
     ]);
-    expect(items[0]).toMatchObject({ rsvp: 'going', past: false, location: 'Amersfoort' });
+    expect(items[0]).toMatchObject({ rsvp: 'going', past: false, location: 'Amersfoort', app: 'atmorsvp' });
     expect(items[1]).toMatchObject({ rsvp: 'interested', past: true });
   });
 
@@ -142,15 +142,13 @@ describe('selectGoing', () => {
 describe('selectReading', () => {
   const books = fixtureRecords<BookRecord>('buzz.bookhive.book');
 
-  it('puts books being read first, then recent additions', () => {
-    const items = selectReading(books, NOW);
-    expect(items).toHaveLength(5);
-    expect(items.slice(0, 2).map((i) => i.title)).toEqual([
+  it('keeps books being read even when they started long ago', () => {
+    const items = selectReading(books, NOW, Infinity);
+    expect(items.filter((i) => i.status === 'reading').map((i) => i.title)).toEqual([
       'The Word for World Is Forest',
       'Become What You Are',
     ]);
-    expect(items.slice(0, 2).every((i) => i.status === 'reading')).toBe(true);
-    expect(items.slice(2).every((i) => i.status === 'wantToRead')).toBe(true);
+    expect(selectReading(books, NOW)).toHaveLength(5);
   });
 
   it('dates finished books by when they were finished', () => {

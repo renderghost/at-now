@@ -2,28 +2,40 @@ import type { AtRecord } from '../atproto/types.js';
 import { LIMIT, WINDOW_DAYS } from '../config.js';
 import type { CalendarEvent, RsvpRecord } from '../lexicons.js';
 import { cdnImageUrl, eventUrl, parseAtUri } from '../links.js';
-import { parseDate } from '../time.js';
+import { parseDate, recordDate } from '../time.js';
 import type { EventItem } from '../types.js';
 import { joinParts, tokenOf } from './util.js';
 
 const DAY = 86_400_000;
 const MODES = new Set(['inperson', 'virtual', 'hybrid']);
 
-/** RSVP subjects worth fetching (anything but "not going"). */
+/**
+ * One RSVP per event: when there are several (apps write their own, or the
+ * answer changed), the newest one is the answer.
+ */
+export function latestRsvps(rsvps: AtRecord<RsvpRecord>[]): AtRecord<RsvpRecord>[] {
+  const latest = new Map<string, { rec: AtRecord<RsvpRecord>; at: number }>();
+  for (const rec of rsvps) {
+    const uri = rec.value.subject?.uri;
+    if (!uri) continue;
+    const at = recordDate(rec)?.getTime() ?? 0;
+    const current = latest.get(uri);
+    if (!current || at > current.at) latest.set(uri, { rec, at });
+  }
+  return [...latest.values()].map((l) => l.rec);
+}
+
+/** RSVP subjects worth fetching (newest answer per event, not "not going"). */
 export function eventUris(rsvps: AtRecord<RsvpRecord>[]): string[] {
-  return [
-    ...new Set(
-      rsvps
-        .filter((r) => tokenOf(r.value.status) !== 'notgoing')
-        .map((r) => r.value.subject?.uri)
-        .filter((uri): uri is string => Boolean(uri))
-    ),
-  ];
+  return latestRsvps(rsvps)
+    .filter((r) => tokenOf(r.value.status) !== 'notgoing')
+    .map((r) => r.value.subject.uri);
 }
 
 /**
- * Upcoming events (any distance ahead, ongoing included), then events that
- * ended in the last 30 days. Going or interested only; cancelled dropped.
+ * Upcoming events (any distance ahead, ongoing included) and events that
+ * ended in the last 30 days, latest date first. Going or interested only;
+ * cancelled dropped.
  */
 export function selectGoing(
   rsvps: AtRecord<RsvpRecord>[],
@@ -58,8 +70,9 @@ export function selectGoing(
     return {
       key: rsvp.uri,
       at: starts.toISOString(),
-      app: 'smokesignal',
+      app: 'atmorsvp',
       href: parts ? eventUrl(parts.did, parts.rkey) : undefined,
+      serviceHref: parts ? eventUrl(parts.did, parts.rkey) : undefined,
       name: event.name,
       startsAt: starts.toISOString(),
       endsAt: parseDate(event.endsAt)?.toISOString(),
@@ -76,7 +89,7 @@ export function selectGoing(
   };
 
   // One odd remote record must not take the others down with it.
-  for (const rsvp of rsvps) {
+  for (const rsvp of latestRsvps(rsvps)) {
     try {
       const item = toItem(rsvp);
       if (item) items.push(item);
@@ -85,14 +98,9 @@ export function selectGoing(
     }
   }
 
-  const upcoming = items
-    .filter((i) => !i.past)
-    .sort((a, b) => a.sortAt - b.sortAt);
-  const recent = items
-    .filter((i) => i.past)
-    .sort((a, b) => b.sortAt - a.sortAt);
-
-  return [...upcoming, ...recent]
+  // Newest date first, like every other theme.
+  return items
+    .sort((a, b) => b.sortAt - a.sortAt)
     .slice(0, limit)
     .map(({ sortAt: _s, ...item }) => item);
 }

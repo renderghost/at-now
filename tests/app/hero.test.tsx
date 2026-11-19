@@ -3,10 +3,11 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { NowHero } from '@/app/components/NowHero/NowHero';
 import { buildNow } from '@/core/buildNow';
-import type { NowPayload } from '@/core/types';
+import type { NowPayload, StatusItem } from '@/core/types';
 import { createFakeSource } from '../helpers/fakeSource';
 
 const NOW = new Date('2026-11-18T12:00:00Z');
+const GREETING = /^Hi, I’m Barry\s*This is what I’m up to now\.$/;
 let payload: NowPayload;
 
 beforeAll(async () => {
@@ -21,69 +22,65 @@ const renderHero = (overrides: Partial<NowPayload> = {}) => {
   );
 };
 
-describe('NowHero', () => {
-  const nowCard = () =>
-    screen.getByRole('heading', { level: 1, name: 'Now' }).closest('[data-card]')!;
+const card = () => screen.getByRole('heading', { level: 1, name: GREETING }).closest('[data-card]')!;
 
-  it('puts the Now title in a full-width white card with the date', () => {
-    const { container } = renderHero();
-    const card = nowCard();
-    expect(card.className).toContain('bg-white');
-    expect(card.textContent).toContain('Wednesday 18 November 2026');
-    expect(container.querySelector('.bg-yellow')).toBeNull();
+describe('NowHero (greeting)', () => {
+  it('greets in the first person', () => {
+    renderHero();
+    expect(screen.getByRole('heading', { level: 1, name: GREETING })).toBeTruthy();
   });
 
   it('starts the card with the back link', () => {
     renderHero();
     const back = screen.getByRole('link', { name: /^←\s*renderg\.host$/ });
     expect(back.getAttribute('href')).toBe('https://renderg.host/');
-    expect(back.closest('[data-card]')).toBe(nowCard());
-    expect(nowCard().querySelector('a')).toBe(back);
+    expect(card().querySelector('a')).toBe(back);
   });
 
-  it('shows the live dot beside "Last updated"', () => {
+  it('shows the avatar, the date and the live line', () => {
     renderHero();
+    expect(screen.getByRole('img', { name: 'B. Prendergast' })).toBeTruthy();
+    expect(card().textContent).toContain('Wednesday 18 November 2026');
     const label = screen.getByText(/Last updated just now/);
     const pulse = label.closest('p')?.querySelector('[data-part="live-pulse"]');
-    expect(pulse).toBeTruthy();
     expect(pulse?.className).toContain('motion-safe:animate-ping');
-    expect(pulse?.className).not.toMatch(/(^|\s)animate-ping/);
-    expect(nowCard().textContent).not.toContain('Refreshed');
   });
 
-  it('nests the tinted profile card inside the Now card', () => {
+  it('folds handle, pronouns and place into a byline beside the avatar', () => {
     renderHero();
-    const profile = screen.getByText('B. Prendergast').closest('[data-card]')!;
-    expect(profile).not.toBe(nowCard());
-    expect(profile.parentElement?.closest('[data-card]')).toBe(nowCard());
-    expect(profile.className).toContain('bg-whitesmoke');
+    const handle = screen.getByRole('link', { name: '@renderg.host' });
+    expect(handle.getAttribute('href')).toBe('https://bsky.app/profile/renderg.host');
+    const byline = handle.closest('[data-part="byline"]')!;
+    expect(byline.querySelector('img')?.getAttribute('alt')).toBe('B. Prendergast');
+    expect(byline.textContent).toContain('B. Prendergast');
+    expect(byline.textContent).toContain('he/him');
+    expect(byline.textContent).toContain('Berlin, DE');
+    expect(byline.className).not.toContain('bg-whitesmoke');
   });
 
-  it('wraps the Bluesky identity in a card with the banner', () => {
+  it('leaves out the bio', () => {
+    renderHero();
+    expect(screen.queryByText(/Socialist building a social web/)).toBeNull();
+    expect(document.querySelector('[data-part="profile-panel"]')).toBeNull();
+  });
+
+  it('shows the status inside the card', () => {
+    const status: StatusItem = { key: 's', at: NOW.toISOString(), app: 'status', text: 'is in love' };
+    renderHero({ status });
+    expect(card().textContent).toContain('Barry is in love');
+  });
+
+  it('has no banner and stays on the type scale', () => {
     const { container } = renderHero();
-    const card = screen.getByText('B. Prendergast').closest('[data-card]');
-    expect(card).toBeTruthy();
-    expect(card?.querySelector('img[src*="/img/banner/"]')).toBeTruthy();
-    expect(screen.getByRole('img', { name: 'B. Prendergast' })).toBeTruthy();
-    expect(
-      screen.getByRole('link', { name: '@renderg.host' }).getAttribute('href')
-    ).toBe('https://bsky.app/profile/renderg.host');
-    expect(screen.getByText(/he\/him/)).toBeTruthy();
-    expect(screen.getByText(/Berlin, DE/)).toBeTruthy();
-    expect(screen.getByText(/Socialist building a social web/)).toBeTruthy();
-    expect(container.querySelector('.bg-blue')).toBeNull();
+    expect(container.querySelector('img[src*="/img/banner/"]')).toBeNull();
+    const h1 = screen.getByRole('heading', { level: 1, name: GREETING });
+    expect(h1.className).toContain('text-[40px]');
   });
 
-  it('keeps the explainer, links and stats out of the header', () => {
-    renderHero();
-    expect(screen.queryByText(/nownownow/)).toBeNull();
-    expect(screen.queryByRole('list', { name: 'Profile links' })).toBeNull();
-    expect(screen.queryByText('At a glance')).toBeNull();
-  });
-
-  it('still renders without a profile', () => {
+  it('still greets without a profile', () => {
     renderHero({ profile: null });
-    expect(screen.getByRole('heading', { level: 1, name: 'Now' })).toBeTruthy();
-    expect(screen.queryByText('B. Prendergast')).toBeNull();
+    expect(screen.getByRole('heading', { level: 1, name: GREETING })).toBeTruthy();
+    expect(screen.queryByRole('img')).toBeNull();
+    expect(document.querySelector('[data-part="byline"]')).toBeNull();
   });
 });

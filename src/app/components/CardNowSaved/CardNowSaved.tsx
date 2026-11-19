@@ -16,6 +16,6 @@ export const CardNowSaved: React.FC<CardNowSavedProps> = ({ item, now }) => (
         {item.note && <p className={styles.note}>{item.note}</p>}
       </div>
     </div>
-    <ItemMeta at={item.at} app={item.app} now={now} prefix="saved" />
+    <ItemMeta at={item.at} app={item.app} now={now} prefix="saved" serviceHref={item.serviceHref} />
   </Card>
 );

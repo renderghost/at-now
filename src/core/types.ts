@@ -4,6 +4,7 @@
  */
 
 export type AppId =
+  | 'atmorsvp'
   | 'bluesky'
   | 'bookhive'
   | 'currents'
@@ -13,7 +14,6 @@ export type AppId =
   | 'plyr'
   | 'semble'
   | 'sifa'
-  | 'smokesignal'
   | 'standard'
   | 'status'
   | 'streamplace'
@@ -45,7 +45,10 @@ export interface ItemBase {
   /** The date the item is placed by (ISO). */
   at: string;
   app: AppId;
+  /** The content itself (article, post, event page…). */
   href?: string;
+  /** The closest page for this item inside its source app. */
+  serviceHref?: string;
 }
 
 export interface StatusItem extends ItemBase {
@@ -90,6 +93,8 @@ export interface RepoItem extends ItemBase {
 export interface TrackItem extends ItemBase {
   title: string;
   artist: string;
+  artistHref?: string;
+  albumHref?: string;
   album?: string;
   imageUrl?: string;
   durationSec?: number;
