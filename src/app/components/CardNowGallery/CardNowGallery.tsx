@@ -23,7 +23,7 @@ export const CardNowGallery: React.FC<CardNowGalleryProps> = ({ item, now }) => 
         ))}
       </ul>
       {extra > 0 && <p className={styles.more}>+{extra} more</p>}
-      <ItemMeta at={item.at} app={item.app} now={now} />
+      <ItemMeta at={item.at} app={item.app} now={now} serviceHref={item.serviceHref} />
     </Card>
   );
 };

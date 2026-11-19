@@ -1,7 +1,7 @@
 import type { AtRecord } from '../atproto/types.js';
 import { IDENTITY, LIMIT } from '../config.js';
 import type { CosmikCard, CurrentsSave } from '../lexicons.js';
-import { cdnImageUrl } from '../links.js';
+import { appUrl, cdnImageUrl, sembleProfileUrl } from '../links.js';
 import { isWithinWindow, parseDate, recordDate } from '../time.js';
 import type { SavedItem } from '../types.js';
 
@@ -55,6 +55,7 @@ export function selectSaving(
         at: at.toISOString(),
         app: 'semble',
         href: content.url,
+        serviceHref: sembleProfileUrl(IDENTITY.handle),
         title: meta?.title || content.url,
         url: content.url,
         imageUrl: meta?.imageUrl || undefined,
@@ -72,6 +73,7 @@ export function selectSaving(
         at: at.toISOString(),
         app: 'semble',
         href: url,
+        serviceHref: sembleProfileUrl(IDENTITY.handle),
         title: hostOf(url) ?? url,
         url,
         siteName: hostOf(url),
@@ -90,6 +92,7 @@ export function selectSaving(
       at: at.toISOString(),
       app: 'currents',
       href: url,
+      serviceHref: appUrl('currents'),
       title: hostOf(url) ?? url,
       url,
       imageUrl: image ? cdnImageUrl(IDENTITY.did, image.ref.$link) : undefined,

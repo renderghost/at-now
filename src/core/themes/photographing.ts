@@ -46,6 +46,7 @@ export function selectPhotographing(
       at: at.toISOString(),
       app: 'grain',
       href: galleryUrl(IDENTITY.did, rkeyOf(gallery.uri)),
+      serviceHref: galleryUrl(IDENTITY.did, rkeyOf(gallery.uri)),
       title: gallery.value.title,
       location:
         gallery.value.location?.name ??

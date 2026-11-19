@@ -24,7 +24,10 @@ export const MAX_PAGES = 40;
 export const TIMEOUT_MS = 4000;
 export const MAX_CONCURRENCY = 12;
 
+export const PLYR_API_URL = 'https://api.plyr.fm';
+
 export const APPS: Record<AppId, AppRef> = {
+  atmorsvp: { id: 'atmorsvp', name: 'atmo.rsvp', url: 'https://atmo.rsvp' },
   bluesky: { id: 'bluesky', name: 'Bluesky', url: 'https://bsky.app' },
   bookhive: { id: 'bookhive', name: 'Bookhive', url: 'https://bookhive.buzz' },
   currents: { id: 'currents', name: 'Currents', url: 'https://currents.is' },
@@ -38,11 +41,6 @@ export const APPS: Record<AppId, AppRef> = {
   plyr: { id: 'plyr', name: 'plyr.fm', url: 'https://plyr.fm' },
   semble: { id: 'semble', name: 'Semble', url: 'https://semble.so' },
   sifa: { id: 'sifa', name: 'Sifa', url: 'https://sifa.id' },
-  smokesignal: {
-    id: 'smokesignal',
-    name: 'Smoke Signal',
-    url: 'https://smokesignal.events',
-  },
   standard: {
     id: 'standard',
     name: 'Standard.site',
@@ -85,7 +83,7 @@ export const COLLECTIONS: readonly CollectionSpec[] = [
   c('id.sifa.profile.location', 'sifa', 'profile'),
   c('io.zzstoatzz.status.record', 'status', 'status'),
   c('id.sifa.profile.position', 'sifa', 'working'),
-  c('community.lexicon.calendar.rsvp', 'smokesignal', 'going'),
+  c('community.lexicon.calendar.rsvp', 'atmorsvp', 'going'),
   c('site.standard.document', 'standard', 'writing'),
   c('site.standard.publication', 'standard', 'writing'),
   c('pub.leaflet.document', 'leaflet', 'writing'),

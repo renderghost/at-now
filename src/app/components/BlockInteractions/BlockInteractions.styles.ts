@@ -1,7 +1,7 @@
 export const subtitle =
-  'font-sans font-semibold text-sm leading-[20px] text-dimgray tracking-[1px] uppercase';
+  'font-sans font-semibold text-base leading-[24px] text-dimgray tracking-[1px] uppercase';
 
-export const summary = 'font-sans font-black text-[24px] leading-[32px] text-black';
+export const summary = 'font-sans font-black text-2xl leading-[32px] text-black';
 
 export const breakdown = 'font-sans font-medium text-base leading-[28px] text-black';
 
@@ -15,4 +15,4 @@ export const body = 'flex flex-col gap-4 items-start min-w-0';
 
 export const label = 'font-sans font-bold text-base leading-[24px] text-black break-words';
 
-export const sublabel = 'font-sans font-medium text-sm leading-[20px] text-dimgray';
+export const sublabel = 'font-sans font-medium text-base leading-[24px] text-dimgray';

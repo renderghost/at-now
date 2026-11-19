@@ -22,7 +22,7 @@ const Ranked: React.FC<{ title: string; items: CountItem[] }> = ({ title, items 
 
 export const BlockListening: React.FC<BlockListeningProps> = ({ theme, now }) => (
   <Card>
-    <div className={styles.grid}>
+    <div className={styles.stack}>
       <div className={styles.column}>
         <div className="flex flex-col">
           <p className={styles.big}>{theme.playCount}</p>
@@ -34,12 +34,19 @@ export const BlockListening: React.FC<BlockListeningProps> = ({ theme, now }) =>
               Last played: {theme.lastPlayed.track}
               {theme.lastPlayed.artist ? ` — ${theme.lastPlayed.artist}` : ''}
             </p>
-            <ItemMeta at={theme.lastPlayed.at} app={theme.lastPlayed.app} now={now} />
+            <ItemMeta
+              at={theme.lastPlayed.at}
+              app={theme.lastPlayed.app}
+              now={now}
+              serviceHref={theme.lastPlayed.serviceHref}
+            />
           </>
         )}
       </div>
-      {theme.topArtists.length > 0 && <Ranked title="Top artists" items={theme.topArtists} />}
-      {theme.topTracks.length > 0 && <Ranked title="Top tracks" items={theme.topTracks} />}
+      <div className={styles.grid}>
+        {theme.topArtists.length > 0 && <Ranked title="Top artists" items={theme.topArtists} />}
+        {theme.topTracks.length > 0 && <Ranked title="Top tracks" items={theme.topTracks} />}
+      </div>
     </div>
   </Card>
 );

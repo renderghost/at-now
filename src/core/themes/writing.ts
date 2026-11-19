@@ -74,6 +74,7 @@ export function selectWriting(
       at: at.toISOString(),
       app: 'standard',
       href,
+      serviceHref: href,
       title: value.title,
       description: value.description || undefined,
       publication,

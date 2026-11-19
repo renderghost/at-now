@@ -22,7 +22,7 @@ export const CardNowPosition: React.FC<CardNowPositionProps> = ({ item, now }) =
           {formatDate(new Date(item.startedAt), 'month')} – {ONGOING}
         </p>
       </div>
-      <ItemMeta at={item.at} app={item.app} now={now} prefix="started" />
+      <ItemMeta at={item.at} app={item.app} now={now} prefix="started" serviceHref={item.serviceHref} />
     </Card>
   );
 };

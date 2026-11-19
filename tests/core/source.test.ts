@@ -113,6 +113,18 @@ describe('createHttpSource', () => {
   });
 });
 
+describe('getPlyrTracks', () => {
+  it('lists an artist’s tracks from the plyr.fm API', async () => {
+    const fetchImpl = vi.fn(async (_url: string | URL | Request) =>
+      json({ tracks: [{ id: 1, atproto_record_uri: 'at://x/fm.plyr.track/a', artist_handle: 'me.test', album: { slug: 's' } }], has_more: false })
+    );
+    const source = sourceWith(fetchImpl as unknown as typeof fetch);
+    const tracks = await source.getPlyrTracks('did:plc:me');
+    expect(tracks).toEqual([{ id: 1, uri: 'at://x/fm.plyr.track/a', artistHandle: 'me.test', albumSlug: 's' }]);
+    expect(String(fetchImpl.mock.calls[0][0])).toBe('https://api.plyr.fm/tracks/?artist_did=did%3Aplc%3Ame&limit=100');
+  });
+});
+
 describe('getProfile', () => {
   it('reads Bluesky totals from the AppView', async () => {
     const fetchImpl = vi.fn(async (_url: string | URL | Request) =>

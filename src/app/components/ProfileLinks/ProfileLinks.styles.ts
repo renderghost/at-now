@@ -1,7 +1,6 @@
 export const wrapper = 'flex flex-col items-start gap-16 w-full';
 
-export const title =
-  'font-sans font-semibold text-base leading-[24px] text-dimgray tracking-[1px] uppercase';
+export const title = 'font-sans font-black text-2xl leading-[32px] text-black';
 
 export const list = 'flex flex-wrap gap-x-16 gap-y-8';
 

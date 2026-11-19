@@ -14,9 +14,10 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ stats, profile }) => {
       <h2 id="at-a-glance" className={styles.title}>
         {TITLE}
       </h2>
+      <Card>
       <div className={styles.grid}>
         {groups.map((group) => (
-          <Card key={group.title}>
+          <div key={group.title} className={styles.group}>
             <p className={styles.groupTitle}>{group.title}</p>
             <dl className={styles.list}>
               {group.stats.map((stat) => (
@@ -26,9 +27,10 @@ export const StatsPanel: React.FC<StatsPanelProps> = ({ stats, profile }) => {
                 </div>
               ))}
             </dl>
-          </Card>
+          </div>
         ))}
       </div>
+      </Card>
     </section>
   );
 };

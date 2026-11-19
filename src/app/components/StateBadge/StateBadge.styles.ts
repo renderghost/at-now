@@ -1,0 +1,3 @@
+// One neutral badge for every state: Going, Interested, Reading, Finished…
+export const badge =
+  'inline-flex bg-black-06 px-8 font-sans font-medium text-base leading-[24px] text-black whitespace-nowrap';

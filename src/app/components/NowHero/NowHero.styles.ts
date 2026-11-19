@@ -1,6 +1,6 @@
 export const header = 'flex justify-center w-full';
 
-export const inner = 'flex flex-col w-full max-w-[1920px] px-24 pt-24';
+export const inner = 'flex flex-col w-full max-w-[848px] px-24 pt-24';
 
 // Inside the full-width Now card: title block (1/3) beside the profile card (2/3).
 export const grid = 'grid grid-cols-1 lg:grid-cols-3 gap-32 w-full pt-16 lg:pt-0';
@@ -9,7 +9,7 @@ export const titleBlock = 'flex flex-col gap-16 items-start justify-end';
 
 // The page's one big moment.
 export const title =
-  'font-sans font-black text-[96px] leading-[80px] md:text-[128px] md:leading-[104px] lg:text-[160px] lg:leading-[128px] tracking-[-0.04em] text-black';
+  'font-sans font-black text-[48px] leading-[56px] text-black';
 
 export const date = 'font-sans font-black text-2xl leading-[32px] text-black';
 

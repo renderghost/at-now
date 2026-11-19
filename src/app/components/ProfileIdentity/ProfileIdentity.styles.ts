@@ -13,7 +13,7 @@ export const avatarLifted =
 
 export const avatar = 'w-[96px] h-[96px] rounded-circular object-cover';
 
-export const name = 'font-sans font-black text-3xl leading-[40px] text-black';
+export const name = 'font-sans font-black text-[32px] leading-[40px] text-black';
 
 export const meta =
   'flex flex-wrap items-center gap-x-8 gap-y-4 font-sans font-medium text-base leading-[28px] text-dimgray';

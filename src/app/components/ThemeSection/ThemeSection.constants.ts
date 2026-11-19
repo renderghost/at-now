@@ -1,14 +1,14 @@
 import type { ThemeId } from '@/core/types';
 
 export const THEME_TITLES: Record<ThemeId, string> = {
-  working: 'Working',
-  going: 'Going',
-  writing: 'Writing',
-  making: 'Making',
-  photographing: 'Photographing',
-  reading: 'Reading',
-  listening: 'Listening',
-  posting: 'Posting',
-  saving: 'Saving',
-  social: 'Social',
+  working: 'I’m working on',
+  going: 'I’m going to',
+  writing: 'I’m writing',
+  making: 'I’m making',
+  photographing: 'I’m photographing',
+  reading: 'I’m reading',
+  listening: 'I’m listening to',
+  posting: 'I’m posting',
+  saving: 'I’m saving',
+  social: 'I’m connecting with',
 };

@@ -7,6 +7,7 @@ import {
   MAX_CONCURRENCY,
   MAX_PAGES,
   PLC_URL,
+  PLYR_API_URL,
   TIMEOUT_MS,
 } from '../src/core/config.js';
 import type { NowPayload } from '../src/core/types.js';
@@ -58,6 +59,7 @@ export function GET(_request: Request): Promise<Response> {
     pdsUrl: IDENTITY.pdsUrl,
     appviewUrl: APPVIEW_URL,
     plcUrl: PLC_URL,
+    plyrApiUrl: PLYR_API_URL,
     timeoutMs: TIMEOUT_MS,
     maxConcurrency: MAX_CONCURRENCY,
     maxPages: MAX_PAGES,

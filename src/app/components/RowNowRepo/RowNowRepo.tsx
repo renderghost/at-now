@@ -15,6 +15,6 @@ export const RowNowRepo: React.FC<RowNowRepoProps> = ({ item, now }) => (
       )}
       {item.description && <p className={styles.description}>{item.description}</p>}
     </div>
-    <ItemMeta at={item.at} app={item.app} now={now} prefix="created" />
+    <ItemMeta at={item.at} app={item.app} now={now} prefix="created" serviceHref={item.serviceHref} />
   </Card>
 );

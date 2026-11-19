@@ -8,6 +8,22 @@ import type {
   LeafletPublication,
 } from '../lexicons.js';
 import { appUrl, galleryUrl, parseAtUri, postUrl, profileUrl } from '../links.js';
+
+/** A followed account's page in the app the follow came from. */
+const personInApp = (app: AppId, handle: string): string => {
+  switch (app) {
+    case 'sifa':
+      return `https://sifa.id/p/${handle}`;
+    case 'tangled':
+      return `https://tangled.org/${handle}`;
+    case 'grain':
+      return `https://grain.social/profile/${handle}`;
+    case 'bluesky':
+      return profileUrl(handle);
+    default:
+      return appUrl(app);
+  }
+};
 import { isWithinWindow, recordDate } from '../time.js';
 import type { AppId, Diagnostic, Highlight, InteractionBlock } from '../types.js';
 import { rkeyOf } from './util.js';
@@ -133,8 +149,12 @@ async function resolveInOrder(
       });
     }
   });
-  return out.slice(0, LIMIT);
+  return byDateDesc(out.slice(0, LIMIT));
 }
+
+/** Highlights are chosen round-robin across apps, then shown newest first. */
+const byDateDesc = (items: Highlight[]): Highlight[] =>
+  [...items].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
 
 /** Follows across apps, deduplicated by account. */
 export async function buildFollowing(
@@ -165,13 +185,15 @@ export async function buildFollowing(
         at: c.at.toISOString(),
         app: c.app,
         href: profileUrl(profile.handle),
+        serviceHref: personInApp(c.app, profile.handle),
         label: profile.displayName || profile.handle,
         sublabel: `@${profile.handle}`,
         avatar: profile.avatar,
       };
     })
     .filter((h): h is Highlight => h !== null)
-    .slice(0, LIMIT);
+    .slice(0, LIMIT)
+    .sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
 
   return {
     total: firstByDid.size,

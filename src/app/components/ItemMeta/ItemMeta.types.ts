@@ -7,6 +7,6 @@ export interface ItemMetaProps {
   now: Date;
   /** Verb before the relative date, e.g. "started" → "started 2 days ago". */
   prefix?: string;
-  /** Hide the Now badge (e.g. when the card already shows it). */
-  hideBadge?: boolean;
+  /** The item's page inside its source app. */
+  serviceHref?: string;
 }

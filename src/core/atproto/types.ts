@@ -31,6 +31,14 @@ export interface ProfileCountsResult {
   joinedAt?: string;
 }
 
+/** A plyr.fm track's web id and album, keyed by its record URI. */
+export interface PlyrTrackRef {
+  id: number;
+  uri: string;
+  artistHandle: string;
+  albumSlug?: string;
+}
+
 export interface AtSource {
   listAll<T>(collection: string): Promise<ListResult<T>>;
   listSince<T>(collection: string, since: Date): Promise<ListResult<T>>;
@@ -41,4 +49,6 @@ export interface AtSource {
   /** Bluesky totals for an account; null if the AppView doesn't know it. */
   getProfile(actor: string): Promise<ProfileCountsResult | null>;
   resolvePds(did: string): Promise<string>;
+  /** plyr.fm's index of an artist's tracks (not on the PDS: web ids, albums). */
+  getPlyrTracks(artistDid: string): Promise<PlyrTrackRef[]>;
 }

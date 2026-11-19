@@ -36,8 +36,8 @@ describe('CardNowEvent', () => {
   const base: EventItem = {
     key: 'e1',
     at: '2027-04-29T07:00:00.000Z',
-    app: 'smokesignal',
-    href: 'https://smokesignal.events/x/y',
+    app: 'atmorsvp',
+    href: 'https://atmo.rsvp/p/x/e/y',
     name: 'AtmosphereConf 2027',
     startsAt: '2027-04-29T07:00:00.000Z',
     rsvp: 'going',
