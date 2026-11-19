@@ -93,7 +93,8 @@ describe('Now page', () => {
   it('renders the identity header once loaded', async () => {
     serve(payload);
     render(<App now={NOW} />);
-    expect(await screen.findByText('B. Prendergast')).toBeTruthy();
+    expect(await screen.findByRole('link', { name: '@renderg.host' })).toBeTruthy();
+    expect(screen.getByRole('img', { name: 'B. Prendergast' })).toBeTruthy();
     expect(screen.getByRole('region', { name: 'At a glance' })).toBeTruthy();
   });
 
@@ -115,7 +116,7 @@ describe('Now page', () => {
     serve({ error: 'unavailable' }, 500);
     render(<App now={NOW} />);
     const main = screen.getByRole('main');
-    expect(screen.getByRole('heading', { level: 1, name: 'Now' })).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1, name: /Hi, I’m Barry/ })).toBeTruthy();
     expect(await within(main).findByText(/I can’t fetch what I’ve been up to right now/)).toBeTruthy();
     expect(
       within(main).getByRole('link', { name: 'renderg.host' }).getAttribute('href')
